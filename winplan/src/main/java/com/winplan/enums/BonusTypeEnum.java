@@ -13,5 +13,7 @@ package com.winplan.enums;
  */
 public enum BonusTypeEnum {
 	
-	TRANSFER;//转让
+	TRANSFER_IN,//转入
+	TRANSFER_OUT;//转出
+	
 }

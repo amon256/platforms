@@ -44,6 +44,11 @@ public class BonusHistory extends DataEntity {
 	private BigDecimal surplus;
 	
 	/**
+	 * 当前累计金额
+	 */
+	private BigDecimal totalBonus;
+	
+	/**
 	 * 备注
 	 */
 	private String desc;
@@ -94,5 +99,13 @@ public class BonusHistory extends DataEntity {
 
 	public void setType(BonusTypeEnum type) {
 		this.type = type;
+	}
+
+	public BigDecimal getTotalBonus() {
+		return totalBonus;
+	}
+
+	public void setTotalBonus(BigDecimal totalBonus) {
+		this.totalBonus = totalBonus;
 	}
 }

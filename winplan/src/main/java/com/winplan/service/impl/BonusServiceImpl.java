@@ -53,15 +53,19 @@ public class BonusServiceImpl extends DataServiceImpl<BonusHistory> implements B
 				User.class);
 		//增加转账记录
 		BonusHistory his = new BonusHistory();
+		his.setDesc(desc);
 		his.setBonus(bonus);
 		his.setAccount(from.getAccount());
 		his.setOtherAccount(to.getAccount());
 		his.setSurplus(from.getBonus());
-		his.setType(BonusTypeEnum.TRANSFER);
+		his.setTotalBonus(from.getTotalBonus());
+		his.setType(BonusTypeEnum.TRANSFER_OUT);
 		this.add(his);//转出方记录
 		his.setAccount(to.getAccount());
 		his.setOtherAccount(from.getAccount());
 		his.setSurplus(to.getBonus());
+		his.setTotalBonus(to.getTotalBonus());
+		his.setType(BonusTypeEnum.TRANSFER_IN);
 		his.setId(null);
 		this.add(his);//转入方记录
 	}

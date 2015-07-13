@@ -28,7 +28,7 @@
 					<li><a href="#">奖金记录</a></li>
 					<li><a href="#">累计奖金记录</a></li>
 					<li><a href="${ctx }/bonus/totransfer">奖金转让</a></li>
-					<li><a href="${ctx }/bonus/history">奖金转让记录</a></li>
+					<li><a href="${ctx }/bonus/transferhistory">奖金转让记录</a></li>
 				</ul>
 			</li>
 			<li>团队系统</li>

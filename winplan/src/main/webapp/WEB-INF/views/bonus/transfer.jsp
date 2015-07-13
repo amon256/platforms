@@ -27,7 +27,7 @@
 			<c:if test="${not empty succ }">
 				<div class="alert alert-success alert-dismissible" role="alert">
 				  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				  	${succ }<a href="#">查看记录</a>
+				  	${succ }<a href="${ctx }/bonus/transferhistory">查看记录</a>
 				</div>
 			</c:if>
 			<div class="form-group">

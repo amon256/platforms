@@ -33,7 +33,6 @@ public class UserServiceImpl extends DataServiceImpl<User> implements UserServic
 
 	@Override
 	public synchronized void register(User user,User parent,String dir) {
-		//TODO 生成账号，默认密码
 		String account = createAccount();
 		user.setAccount(account);
 		user.setPassword(SystemContext.getDefaultPassword());
