@@ -79,4 +79,31 @@ public class BonusController extends BaseController {
 		model.put("size", size);
 		return "bonus/transferHistory";
 	}
+	
+	@RequestMapping(value="bonushistory")
+	public String bonusHistory(@RequestParam(defaultValue="0")int skip,@RequestParam(defaultValue="10")int size,ModelMap model){
+		User user = WebContext.getLoginUser();
+		Query query = Query.query(Criteria.where("account").is(user.getAccount()))
+				.with(new Sort(Direction.DESC, "createTime"));
+		query.skip(skip).limit(size);
+		List<BonusHistory> historys = bonusService.findList(query);
+		model.put("datas", historys);
+		model.put("skip", skip);
+		model.put("size", size);
+		return "bonus/bonusHistory";
+	}
+	
+	@RequestMapping(value="totalhistory")
+	public String totalHistory(@RequestParam(defaultValue="0")int skip,@RequestParam(defaultValue="10")int size,ModelMap model){
+		User user = WebContext.getLoginUser();
+		Query query = Query.query(Criteria.where("account").is(user.getAccount())
+								.and("type").in(CollectionUtils.createSet(BonusTypeEnum.class, BonusTypeEnum.getAddBonusTypeEnums())))
+				.with(new Sort(Direction.DESC, "createTime"));
+		query.skip(skip).limit(size);
+		List<BonusHistory> historys = bonusService.findList(query);
+		model.put("datas", historys);
+		model.put("skip", skip);
+		model.put("size", size);
+		return "bonus/totalHistory";
+	}
 }

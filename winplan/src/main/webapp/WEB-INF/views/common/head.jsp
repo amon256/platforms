@@ -9,7 +9,6 @@ User user = WebContext.getLoginUser();
 		<div class="row">
 			<div class="col-md-8 ">
 				<h4 class="text-left text-primary">欢迎您！尊敬的VIP<%=user.getName() %>。<a href="${ctx }/logout" class="btn btn-danger btn-default" role="button">安全退出</a></h4>
-				<div></div>
 			</div>
 		</div>
 	</div>

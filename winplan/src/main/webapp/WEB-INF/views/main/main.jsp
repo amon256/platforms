@@ -14,7 +14,7 @@
 			<li><a href="${ctx }/main">总汇页面</a></li>
 		</ul>
 		<ul>
-			<li><a href="#">会员注册</a></li>
+			<li><a href="${ctx }/user/toregister">会员注册</a></li>
 			<li>我的资料</li>
 			<li>
 				<ul>
@@ -25,8 +25,8 @@
 			<li>财务总汇</li>
 			<li>
 				<ul>
-					<li><a href="#">奖金记录</a></li>
-					<li><a href="#">累计奖金记录</a></li>
+					<li><a href="${ctx }/bonus/bonushistory">奖金记录</a></li>
+					<li><a href="${ctx }/bonus/totalhistory">累计奖金记录</a></li>
 					<li><a href="${ctx }/bonus/totransfer">奖金转让</a></li>
 					<li><a href="${ctx }/bonus/transferhistory">奖金转让记录</a></li>
 				</ul>
@@ -35,7 +35,7 @@
 			<li>
 				<ul>
 					<li><a href="${ctx }/user/usertree">介绍系统</a></li>
-					<li><a href="#">安置系统</a></li>
+					<!-- <li><a href="#">安置系统</a></li>  -->
 				</ul>
 			</li>
 		</ul>

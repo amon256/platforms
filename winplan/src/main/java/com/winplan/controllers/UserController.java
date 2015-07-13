@@ -133,6 +133,7 @@ public class UserController extends BaseController {
 	@RequestMapping(value="register")
 	public String register(User user,String parentAccount,String dir,ModelMap model){
 		User existsUser = WebContext.getLoginUser();
+		existsUser = userService.findById(existsUser.getId());
 		User parentUser = null;
 		User recommendUser = null;
 		boolean validateFlag = true;
@@ -154,7 +155,7 @@ public class UserController extends BaseController {
 			validateFlag = false;
 		}
 		if(validateFlag){
-			if(parentAccount != null){
+			if(parentAccount != null && !"".equals(parentAccount.trim())){
 				parentUser = userService.findOne(Query.query(Criteria.where("account").is(parentAccount).and("path").regex("^" + existsUser.getPath())));
 				if(parentUser == null){
 					validateMsg = "接点人不存在";
@@ -167,13 +168,17 @@ public class UserController extends BaseController {
 						validateMsg = parentUser.getAccount() + "的右边己注册";
 						validateFlag = false;
 					}else{
-						//需要扣除登录人奖金
+						//登录人奖金
+						if(existsUser.getBonus().compareTo(new BigDecimal(SystemContext.getBonusPerRegisterUser())) < 0){
+							validateMsg = "您的剩余奖金不足" + SystemContext.getBonusPerRegisterUser();
+							validateFlag = false;
+						}
 					}
 				}
 			}
 		}
 		if(validateFlag){
-			if(user.getRecommend() != null){
+			if(user.getRecommend() != null && !"".equals(user.getRecommend().trim())){
 				recommendUser = userService.findOne(Query.query(Criteria.where("account").is(user.getRecommend())));
 				if(recommendUser == null){
 					validateMsg = "推荐人不存在";
@@ -184,7 +189,7 @@ public class UserController extends BaseController {
 			}
 		}
 		if(validateFlag){
-			userService.register(user,parentUser,dir);
+			userService.register(user,parentUser,existsUser,dir);
 			model.put("succ", "注册成功,新用户账号:" + user.getAccount() + ",密码:" + user.getPassword());
 		}else{
 			model.put("user", user);

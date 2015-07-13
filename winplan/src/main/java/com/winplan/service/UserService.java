@@ -21,7 +21,7 @@ public interface UserService extends DataService<User> {
 	 * @param parent
 	 * @param dir
 	 */
-	public void register(User user,User parent,String dir); 
+	public void register(User user,User parent,User loginUser,String dir); 
 	
 	/**
 	 * 按账号查询

@@ -33,32 +33,30 @@
 							<a href="${ctx }/user/usertree?account=${root.value.account}">${root.value.account }(${root.value.name })</a>
 							<a href="${ctx }/user/userinfo?id=${root.value.id}">【查看】</a>
 						</span>
-						<c:if test="${root.left != null or root.right != null }">
-							<ul class="nav nav-pills nav-stacked nav-tree" >
-								<c:choose>
-									<c:when test="${root.left != null }">
-										<c:set var="treeLeaf" value="${root.left }" scope="request"></c:set>
-										<c:import url="leaf.jsp" />
-									</c:when>
-									<c:otherwise>
-										<li>
-											<span><a href="${ctx }/user/toregister?parentAccount=${root.value.account}&dir=left">注册</a></span>
-										</li>
-									</c:otherwise>
-								</c:choose>
-								<c:choose>
-									<c:when test="${root.right != null }">
-										<c:set var="treeLeaf" value="${root.right }" scope="request"></c:set>
-										<c:import url="leaf.jsp" />
-									</c:when>
-									<c:otherwise>
-										<li>
-											<span><a href="${ctx }/user/toregister?parentAccount=${root.value.account}&dir=right">注册</a></span>
-										</li>
-									</c:otherwise>
-								</c:choose>
-							</ul>
-						</c:if>
+						<ul class="nav nav-pills nav-stacked nav-tree" >
+							<c:choose>
+								<c:when test="${root.left != null }">
+									<c:set var="treeLeaf" value="${root.left }" scope="request"></c:set>
+									<c:import url="leaf.jsp" />
+								</c:when>
+								<c:otherwise>
+									<li>
+										<span><a href="${ctx }/user/toregister?parentAccount=${root.value.account}&dir=left">注册</a></span>
+									</li>
+								</c:otherwise>
+							</c:choose>
+							<c:choose>
+								<c:when test="${root.right != null }">
+									<c:set var="treeLeaf" value="${root.right }" scope="request"></c:set>
+									<c:import url="leaf.jsp" />
+								</c:when>
+								<c:otherwise>
+									<li>
+										<span><a href="${ctx }/user/toregister?parentAccount=${root.value.account}&dir=right">注册</a></span>
+									</li>
+								</c:otherwise>
+							</c:choose>
+						</ul>
 					</li>
 				</ul>
 			</div>
