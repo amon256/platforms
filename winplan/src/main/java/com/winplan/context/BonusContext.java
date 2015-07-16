@@ -18,6 +18,10 @@ public class BonusContext {
 	 * @return
 	 */
 	public static double getCenBonus(int level,int newLevel){
-		return 0.9 * ((newLevel - level > 4) ? 500 : 250);
+		return ((newLevel - level > 1) ? 500 : 300);
+	}
+	
+	public static double getTaxRate(){
+		return 0.9;
 	}
 }

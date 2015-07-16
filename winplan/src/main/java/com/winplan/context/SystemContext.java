@@ -18,7 +18,7 @@ public class SystemContext {
 	 * @return
 	 */
 	public static int getBonusPerRegisterUser(){
-		return 1180;
+		return 1200;
 	}
 	
 	/**

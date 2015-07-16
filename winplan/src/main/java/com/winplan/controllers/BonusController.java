@@ -25,6 +25,7 @@ import com.winplan.enums.BonusTypeEnum;
 import com.winplan.service.BonusService;
 import com.winplan.service.UserService;
 import com.winplan.utils.CollectionUtils;
+import com.winplan.utils.Pagination;
 
 /**  
  * 功能描述：
@@ -68,42 +69,42 @@ public class BonusController extends BaseController {
 	}
 	
 	@RequestMapping(value="transferhistory")
-	public String transferhistory(@RequestParam(defaultValue="0")int skip,@RequestParam(defaultValue="10")int size,ModelMap model){
+	public String transferhistory(Pagination pagination,ModelMap model){
 		User user = WebContext.getLoginUser();
 		Query query = Query.query(Criteria.where("account").is(user.getAccount()).and("type").in(CollectionUtils.createSet(BonusTypeEnum.class, BonusTypeEnum.TRANSFER_IN,BonusTypeEnum.TRANSFER_OUT)))
 				.with(new Sort(Direction.DESC, "createTime"));
-		query.skip(skip).limit(size);
+		pagination.setRecordCount((int) bonusService.count(query));
+		query.skip((pagination.getCurrentPage() - 1) * pagination.getPageSize()).limit(pagination.getPageSize());
 		List<BonusHistory> historys = bonusService.findList(query);
 		model.put("datas", historys);
-		model.put("skip", skip);
-		model.put("size", size);
+		model.put("pagination", pagination);
 		return "bonus/transferHistory";
 	}
 	
 	@RequestMapping(value="bonushistory")
-	public String bonusHistory(@RequestParam(defaultValue="0")int skip,@RequestParam(defaultValue="10")int size,ModelMap model){
+	public String bonusHistory(Pagination pagination,ModelMap model){
 		User user = WebContext.getLoginUser();
 		Query query = Query.query(Criteria.where("account").is(user.getAccount()))
 				.with(new Sort(Direction.DESC, "createTime"));
-		query.skip(skip).limit(size);
+		pagination.setRecordCount((int) bonusService.count(query));
+		query.skip((pagination.getCurrentPage() - 1) * pagination.getPageSize()).limit(pagination.getPageSize());
 		List<BonusHistory> historys = bonusService.findList(query);
 		model.put("datas", historys);
-		model.put("skip", skip);
-		model.put("size", size);
+		model.put("pagination", pagination);
 		return "bonus/bonusHistory";
 	}
 	
 	@RequestMapping(value="totalhistory")
-	public String totalHistory(@RequestParam(defaultValue="0")int skip,@RequestParam(defaultValue="10")int size,ModelMap model){
+	public String totalHistory(Pagination pagination,ModelMap model){
 		User user = WebContext.getLoginUser();
 		Query query = Query.query(Criteria.where("account").is(user.getAccount())
 								.and("type").in(CollectionUtils.createSet(BonusTypeEnum.class, BonusTypeEnum.getAddBonusTypeEnums())))
 				.with(new Sort(Direction.DESC, "createTime"));
-		query.skip(skip).limit(size);
+		pagination.setRecordCount((int) bonusService.count(query));
+		query.skip((pagination.getCurrentPage() - 1) * pagination.getPageSize()).limit(pagination.getPageSize());
 		List<BonusHistory> historys = bonusService.findList(query);
 		model.put("datas", historys);
-		model.put("skip", skip);
-		model.put("size", size);
+		model.put("pagination", pagination);
 		return "bonus/totalHistory";
 	}
 }

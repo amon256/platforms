@@ -13,6 +13,7 @@ import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -133,7 +134,9 @@ public abstract class CoreServiceImpl<T extends CoreEntity> implements CoreServi
 		if(key == null){
 			throw new IllegalArgumentException("key is null");
 		}
-		Sequence sequence = mongoTemplate.findAndModify(Query.query(Criteria.where("id").is(key)), Update.update("lastDate", new Date()).inc("currentValue", 1), Sequence.class);
+		FindAndModifyOptions options = new FindAndModifyOptions();
+		options.returnNew(true);
+		Sequence sequence = mongoTemplate.findAndModify(Query.query(Criteria.where("id").is(key)), Update.update("lastDate", new Date()).inc("currentValue", 1),options, Sequence.class);
 		if(sequence == null){
 			sequence = new Sequence();
 			sequence.setId(key);

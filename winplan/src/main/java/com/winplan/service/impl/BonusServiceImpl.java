@@ -44,11 +44,10 @@ public class BonusServiceImpl extends DataServiceImpl<BonusHistory> implements B
 				Update.update("lastUpdateTime", new Date()).inc("bonus", BigDecimal.ZERO.subtract(bonus).setScale(2, RoundingMode.HALF_UP).doubleValue()),
 				options, 
 				User.class);
-		//目标账号增加bonus及累计bonus
+		//目标账号增加bonus,转让奖金不累计到总奖金
 		to = getMongoTemplate().findAndModify(
 				Query.query(Criteria.where("_id").is(to.getId())), 
-				Update.update("lastUpdateTime", new Date()).inc("bonus", bonus.setScale(2, RoundingMode.HALF_UP).doubleValue())
-					.inc("totalBonus", bonus.setScale(2, RoundingMode.HALF_UP).doubleValue()), 
+				Update.update("lastUpdateTime", new Date()).inc("bonus", bonus.setScale(2, RoundingMode.HALF_UP).doubleValue()), 
 				options,
 				User.class);
 		//增加转账记录

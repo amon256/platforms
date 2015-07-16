@@ -72,9 +72,19 @@ public class User extends DataEntity {
 	private String left;
 	
 	/**
+	 * 左区人数
+	 */
+	private int leftCount;
+	
+	/**
 	 * 右
 	 */
 	private String right;
+	
+	/**
+	 * 右区人数
+	 */
+	private int rightCount;
 	
 	/**
 	 * 推荐人
@@ -175,6 +185,22 @@ public class User extends DataEntity {
 
 	public void setTotalBonus(BigDecimal totalBonus) {
 		this.totalBonus = totalBonus;
+	}
+
+	public int getRightCount() {
+		return rightCount;
+	}
+
+	public void setRightCount(int rightCount) {
+		this.rightCount = rightCount;
+	}
+
+	public int getLeftCount() {
+		return leftCount;
+	}
+
+	public void setLeftCount(int leftCount) {
+		this.leftCount = leftCount;
 	}
 	
 	

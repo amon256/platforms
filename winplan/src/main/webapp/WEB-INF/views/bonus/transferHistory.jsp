@@ -34,7 +34,7 @@
 					<c:when test="${not empty datas }">
 						<c:forEach items="${datas }" var="d" varStatus="s">
 							<tr>
-								<td>${skip + s.index + 1}</td>
+								<td>${pagination.startIndex + s.index + 1}</td>
 								<td><fmt:formatDate value="${d.createTime }" pattern="yyyy.MM.dd HH:mm:ss"/></td>
 								<td>
 									<c:choose>
@@ -59,25 +59,9 @@
 			<tfoot>
 				<tr>
 					<td colspan="7">
-						<nav>
-						  <ul class="pagination">
-						    <li>
-						      <a href="#" aria-label="Previous">
-						        <span aria-hidden="true">&laquo;</span>
-						      </a>
-						    </li>
-						    <li><a href="#">1</a></li>
-						    <li><a href="#">2</a></li>
-						    <li><a href="#">3</a></li>
-						    <li><a href="#">4</a></li>
-						    <li><a href="#">5</a></li>
-						    <li>
-						      <a href="#" aria-label="Next">
-						        <span aria-hidden="true">&raquo;</span>
-						      </a>
-						    </li>
-						  </ul>
-						</nav>
+						<jsp:include page="../common/pagination.jsp" flush="true">
+							<jsp:param value="bonus/transferhistory" name="url"/>
+						</jsp:include>
 					</td>
 				</tr>
 			</tfoot>

@@ -78,6 +78,8 @@ public class UserServiceImpl extends DataServiceImpl<User> implements UserServic
 				update(parent, CollectionUtils.createSet(String.class, "right"));
 			}
 		}
+		//重算左右区域人数
+		recalUserCount(user);
 		//扣注册奖金
 		FindAndModifyOptions options = new FindAndModifyOptions();
 		options.returnNew(true);
@@ -101,6 +103,31 @@ public class UserServiceImpl extends DataServiceImpl<User> implements UserServic
 		giveTj(user);
 		//层奖
 		giveCen(user);
+	}
+	
+	private void recalUserCount(User user){
+		FindAndModifyOptions options = new FindAndModifyOptions();
+		options.returnNew(true);
+		Set<String> paths = new HashSet<String>();
+		String path = user.getPath();
+		while(path.length() > 1){
+			path = path.substring(0, path.length() - 1);
+			paths.add(path);
+		}
+		List<User> parentUsers = null;
+		if(paths.size() > 0){
+			Query query = Query.query(Criteria.where("path").in(paths)).with(new Sort(Direction.DESC, "path"));
+			parentUsers = this.findList(query);
+			if(parentUsers != null){
+				for(User pu : parentUsers){
+					query = Query.query(Criteria.where("path").regex("^" + pu.getPath() + "0").and("level").gt(pu.getLevel()));
+					long leftCount = this.count(query);
+					query = Query.query(Criteria.where("path").regex("^" + pu.getPath() + "1").and("level").gt(pu.getLevel()));
+					long rightCount = this.count(query);
+					this.update(Query.query(Criteria.where("_id").is(pu.getId())), Update.update("leftCount", leftCount).set("rightCount", rightCount));
+				}
+			}
+		}
 	}
 	
 	private void giveCen(User user){
@@ -131,14 +158,14 @@ public class UserServiceImpl extends DataServiceImpl<User> implements UserServic
 					//增加奖金
 					pu = getMongoTemplate().findAndModify(
 							Query.query(Criteria.where("_id").is(pu.getId())), 
-							Update.update("lastUpdateTime", new Date()).inc("bonus", bonus).inc("totalBonus", bonus),
+							Update.update("lastUpdateTime", new Date()).inc("bonus", bonus*BonusContext.getTaxRate()).inc("totalBonus", bonus),
 							options, 
 							User.class);
 					if(pu != null){
 						logger.debug("{}发{}层奖(left:{},right:{})",pu.getAccount(),bonus,leftCount,rightCount);
 						//记录奖金历史
 						his = new BonusHistory();
-						his.setBonus(BigDecimal.valueOf(bonus));
+						his.setBonus(BigDecimal.valueOf(bonus*BonusContext.getTaxRate()));
 						his.setAccount(pu.getAccount());
 						his.setSurplus(pu.getBonus());
 						his.setTotalBonus(pu.getTotalBonus());
