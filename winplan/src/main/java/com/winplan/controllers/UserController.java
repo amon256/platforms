@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.winplan.context.SystemContext;
+import com.winplan.context.TokenContext;
 import com.winplan.context.WebContext;
 import com.winplan.entity.User;
 import com.winplan.service.UserService;
@@ -94,6 +95,8 @@ public class UserController extends BaseController {
 				}
 			}
 		}
+		User user = WebContext.getLoginUser();
+		model.put("user", user);
 		return "user/password";
 	}
 	
@@ -128,11 +131,12 @@ public class UserController extends BaseController {
 		}
 		model.put("user", user);
 		model.put("dir", dir);
+		model.put(TokenContext.TOKEN_KEY, TokenContext.createToken());
 		return "user/register";
 	}
 	
 	@RequestMapping(value="register")
-	public String register(User user,String parentAccount,String dir,ModelMap model){
+	public String register(User user,String parentAccount,String dir,@RequestParam(value="__TOKEN__",required=true)String token,ModelMap model){
 		User existsUser = WebContext.getLoginUser();
 		existsUser = userService.findById(existsUser.getId());
 		User parentUser = null;
@@ -197,6 +201,7 @@ public class UserController extends BaseController {
 			model.put("dir", dir);
 			model.put("msg", validateMsg);
 			model.put("parentUser", parentUser);
+			model.put(TokenContext.TOKEN_KEY, TokenContext.createToken());
 			return "user/register";
 		}
 		return "user/userInfo";

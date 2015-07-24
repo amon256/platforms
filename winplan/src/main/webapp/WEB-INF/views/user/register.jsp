@@ -17,6 +17,7 @@
 			<li class="active">会员注册</li>
 		</ul>
 		<form role="form" class="form-horizontal" action="${ctx }/user/register" method="post">
+			<input type="hidden" name="__TOKEN__" value="${__TOKEN__ }"/>
 			<c:if test="${not empty msg }">
 				<div class="alert alert-warning alert-dismissible" role="alert">
 				  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>

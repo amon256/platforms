@@ -7,6 +7,7 @@ package com.winplan.entity;
 
 import java.math.BigDecimal;
 
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.winplan.enums.BonusTypeEnum;
@@ -31,6 +32,7 @@ public class BonusHistory extends DataEntity {
 	/**
 	 * 记录归属账号
 	 */
+	@Indexed
 	private String account;
 	
 	/**

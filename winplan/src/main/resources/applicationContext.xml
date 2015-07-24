@@ -71,6 +71,11 @@
 				<property name="exclude" value="/login"/>
 			</bean>
 		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean class="com.winplan.interceptors.TokenInterceptor">
+			</bean>
+		</mvc:interceptor>
 	</mvc:interceptors>
 	
 </beans>

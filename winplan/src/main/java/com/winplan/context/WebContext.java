@@ -21,6 +21,12 @@ import com.winplan.entity.User;
 public class WebContext {
 	public static final String LOGIN_USER_KEY = "c67r6sd4kl221";
 	
+	public static HttpSession getSession(){
+		ServletRequestAttributes attrs =(ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+		HttpSession session = attrs.getRequest().getSession();
+		return session;
+	}
+	
 	/**
 	 * 是否己登录
 	 * @return

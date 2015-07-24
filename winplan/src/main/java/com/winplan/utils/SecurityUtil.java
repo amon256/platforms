@@ -35,6 +35,6 @@ public class SecurityUtil {
 	}
 	
 	public static void main(String[] args) {
-		System.out.println(encryptSHA("简单加密"));
+		System.out.println(encryptSHA("111"));
 	}
 }
