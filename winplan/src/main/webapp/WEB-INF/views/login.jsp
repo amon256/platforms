@@ -22,7 +22,19 @@
 					<div class="form-group">
 						<label for="account" class="col-sm-2 control-label">用户账号：</label>
 						<div class="col-sm-6">
-							<input type="text" class="form-control" id="account" name="account" value="${user.account }" placeholder="QZ+六位数字">
+							<c:choose>
+								<c:when test="${empty accounts }">
+									<input type="text" class="form-control" id="account" name="account" value="${user.account }" placeholder="QZ+六位数字">
+								</c:when>
+								<c:otherwise>
+									<input type="text" class="form-control" id="account" name="account" value="${user.account }" list="accountList" placeholder="QZ+六位数字">
+									<datalist id="accountList">
+										<c:forEach items="${accounts }" var="acc">
+											<option>${acc }</option>
+										</c:forEach>
+									</datalist>
+								</c:otherwise>
+							</c:choose>
 						</div>
 					</div>
 					<div class="form-group">

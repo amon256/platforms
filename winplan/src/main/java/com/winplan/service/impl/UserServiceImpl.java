@@ -33,6 +33,7 @@ import com.winplan.enums.BonusTypeEnum;
 import com.winplan.service.BonusService;
 import com.winplan.service.UserService;
 import com.winplan.utils.CollectionUtils;
+import com.winplan.utils.SecurityUtil;
 
 /**  
  * 功能描述：
@@ -59,8 +60,8 @@ public class UserServiceImpl extends DataServiceImpl<User> implements UserServic
 		String account = createAccount();
 		user.setAccount(account);
 		logger.debug("账号:{}",user.getAccount());
-		user.setPassword(SystemContext.getDefaultPassword());
-		logger.debug("密码:{}",user.getPath());
+		user.setPassword(SecurityUtil.encryptSHA(SystemContext.getDefaultPassword()));
+		logger.debug("密码:{}",user.getPassword());
 		if(parent != null && parent.getPath() != null){
 			user.setPath(parent.getPath() + ("left".equals(dir)?"0":"1"));
 			logger.debug("path:{}",user.getPath());
@@ -154,7 +155,7 @@ public class UserServiceImpl extends DataServiceImpl<User> implements UserServic
 				if(leftCount > 0 && rightCount > 0 && (leftCount == 1 || rightCount == 1)){
 					//左右都有，并且第一次成层
 					//按层级计算奖金
-					double bonus = BonusContext.getCenBonus(user.getLevel(), pu.getLevel());
+					double bonus = BonusContext.getCenBonus(pu.getLevel(), user.getLevel());
 					//增加奖金
 					pu = getMongoTemplate().findAndModify(
 							Query.query(Criteria.where("_id").is(pu.getId())), 

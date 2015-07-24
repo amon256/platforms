@@ -24,6 +24,7 @@ import com.winplan.service.UserService;
 import com.winplan.tree.TreeBuild;
 import com.winplan.tree.UserNode;
 import com.winplan.utils.CollectionUtils;
+import com.winplan.utils.SecurityUtil;
 
 /**  
  * 功能描述：用户controller
@@ -84,8 +85,8 @@ public class UserController extends BaseController {
 			User existsUser = WebContext.getLoginUser();
 			existsUser = userService.findById(existsUser.getId());
 			if(existsUser != null){
-				if(existsUser.getPassword().equals(pwd)){
-					existsUser.setPassword(npwd);
+				if(existsUser.getPassword().equals(SecurityUtil.encryptSHA(pwd))){
+					existsUser.setPassword(SecurityUtil.encryptSHA(npwd));
 					userService.update(existsUser, CollectionUtils.createSet(String.class, "password"));
 					model.put("succ", "修改密码成功,下次请用新密码登录.");
 				}else{
@@ -190,7 +191,7 @@ public class UserController extends BaseController {
 		}
 		if(validateFlag){
 			userService.register(user,parentUser,existsUser,dir);
-			model.put("succ", "注册成功,新用户账号:" + user.getAccount() + ",密码:" + user.getPassword());
+			model.put("succ", "注册成功,新用户账号:" + user.getAccount() + ",密码:" + SystemContext.getDefaultPassword());
 		}else{
 			model.put("user", user);
 			model.put("dir", dir);
