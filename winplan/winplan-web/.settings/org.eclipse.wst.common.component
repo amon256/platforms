@@ -4,7 +4,7 @@
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
         <dependent-module archiveName="winplan-core-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/winplan-core/winplan-core">
             <dependency-type>uses</dependency-type>
         </dependent-module>
