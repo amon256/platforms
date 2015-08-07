@@ -8,7 +8,9 @@ package com.winplan.controllers;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -225,21 +227,38 @@ public class UserController extends BaseController {
 	public List<ZTreeNode> recommendData(@RequestParam(value="id",required=false)String account){
 		List<ZTreeNode> resultList = new ArrayList<ZTreeNode>();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		List<User> users = new LinkedList<User>();
 		if(account == null || "".equals(account.trim())){
-			resultList.add(createNode(WebContext.getLoginUser(), sdf));
+			users.add(WebContext.getLoginUser());
 		}else{
 			Query query = Query.query(Criteria.where("recommend").is(account)).with(new Sort(Direction.ASC, "createTime"));
-			List<User> users = userService.findList(query);
-			if(users != null && users.size() > 0){
-				for(User user : users){
-					resultList.add(createNode(user, sdf));
+			users = userService.findList(query);
+		}
+		if(users != null && users.size() > 0){
+			Map<String,Integer> accountRecommend = accountRecommend(users);
+			boolean isParent = true;
+			for(User user : users){
+				if(accountRecommend.containsKey(user.getAccount()) && accountRecommend.get(user.getAccount()) > 0){
+					isParent = true;
+				}else{
+					isParent = false;
 				}
+				resultList.add(createNode(user,isParent, sdf));
 			}
 		}
 		return resultList;
 	}
 	
-	private ZTreeNode createNode(User user,SimpleDateFormat sdf){
+	private Map<String,Integer> accountRecommend(List<User> users){
+		List<String> accounts = new LinkedList<String>();
+		for(User user : users){
+			accounts.add(user.getAccount());
+		}
+		Map<String,Integer> recommendAccount = userService.groupRecommend(accounts);
+		return recommendAccount;
+	}
+	
+	private ZTreeNode createNode(User user,boolean isParent, SimpleDateFormat sdf){
 		ZTreeNode node = new ZTreeNode();
 		node.setId(user.getAccount());
 		StringBuilder name = new StringBuilder();
@@ -249,6 +268,7 @@ public class UserController extends BaseController {
 		}
 		name.append(")");
 		node.setName(name.toString());
+		node.setIsParent(isParent);
 		return node;
 	}
 }

@@ -10,8 +10,11 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -20,11 +23,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.mongodb.core.FindAndModifyOptions;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
+import com.mongodb.BasicDBList;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 import com.winplan.context.BonusContext;
 import com.winplan.context.SystemContext;
 import com.winplan.entity.BonusHistory;
@@ -207,8 +214,23 @@ public class UserServiceImpl extends DataServiceImpl<User> implements UserServic
 		}
 	}
 	
-	public static void main(String[] args) {
-		System.out.println(MessageFormat.format("层奖{0}元", 50));
+	@SuppressWarnings("unchecked")
+	@Override
+	public Map<String, Integer> groupRecommend(List<String> accounts) {
+		String collection = User.class.getAnnotation(Document.class).collection();
+		Query query = Query.query(Criteria.where("recommend").in(accounts));
+		String reduce = "function(doc, aggr){aggr.count += 1;}";
+		DBObject result = getMongoTemplate().getCollection(collection).group(new BasicDBObject("recommend",1), query.getQueryObject(), new BasicDBObject("count", 0), reduce);
+		Map<String,Integer> resultMap = new HashMap<String, Integer>();
+		if(result != null && result instanceof BasicDBList){
+			BasicDBList list = (BasicDBList)result;
+			Iterator<Object> iterator = list.iterator();
+			while(iterator.hasNext()){
+				BasicDBObject object = (BasicDBObject)iterator.next();
+				resultMap.put(object.getString("recommend"), object.getInt("count"));
+			}
+		}
+		return resultMap;
 	}
 	
 	/**

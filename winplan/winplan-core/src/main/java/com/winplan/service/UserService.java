@@ -5,6 +5,9 @@
  */
 package com.winplan.service;
 
+import java.util.List;
+import java.util.Map;
+
 import com.winplan.entity.User;
 
 /**  
@@ -29,4 +32,11 @@ public interface UserService extends DataService<User> {
 	 * @return
 	 */
 	public User findByAccount(String account);
+	
+	/**
+	 * 根据账号统计推荐人数
+	 * @param accounts
+	 * @return
+	 */
+	public Map<String,Integer> groupRecommend(List<String> accounts);
 }
