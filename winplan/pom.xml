@@ -9,6 +9,7 @@
   <modules>
   	<module>winplan-web</module>
     <module>winplan-core</module>
+    <module>winplan-admin</module>
   </modules>
   <build>
 		<plugins>

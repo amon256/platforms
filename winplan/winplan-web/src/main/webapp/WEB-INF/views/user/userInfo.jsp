@@ -53,12 +53,6 @@
 					<input type="text" class="form-control" id="createTime" readonly="readonly" readonly="readonly" value="<fmt:formatDate value="${user.createTime }" pattern="yyyy年M月d日"/>" />
 				</div>
 			</div>
-			<div class="form-group">
-				<label for="mobile" class="col-sm-2 control-label">手机号码：</label>
-				<div class="col-sm-6">
-					<input type="text" class="form-control" id="mobile" name="mobile" readonly="readonly" value="${user.mobile }" />
-				</div>
-			</div>
 			<button type="button" class="btn btn-info" onclick="window.history.go(-1);">返回</button>
 		</form>
 	</div>

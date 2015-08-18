@@ -77,6 +77,11 @@ public class User extends DataEntity {
 	private int leftCount;
 	
 	/**
+	 * 左区深度
+	 */
+	private int leftDeep;
+	
+	/**
 	 * 右
 	 */
 	private String right;
@@ -85,6 +90,11 @@ public class User extends DataEntity {
 	 * 右区人数
 	 */
 	private int rightCount;
+	
+	/**
+	 * 右区深度
+	 */
+	private int rightDeep;
 	
 	
 	/**
@@ -203,4 +213,22 @@ public class User extends DataEntity {
 	public void setLeftCount(int leftCount) {
 		this.leftCount = leftCount;
 	}
+
+	public int getLeftDeep() {
+		return leftDeep;
+	}
+
+	public void setLeftDeep(int leftDeep) {
+		this.leftDeep = leftDeep;
+	}
+
+	public int getRightDeep() {
+		return rightDeep;
+	}
+
+	public void setRightDeep(int rightDeep) {
+		this.rightDeep = rightDeep;
+	}
+	
+	
 }

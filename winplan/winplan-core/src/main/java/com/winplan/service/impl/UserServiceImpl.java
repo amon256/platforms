@@ -214,7 +214,6 @@ public class UserServiceImpl extends DataServiceImpl<User> implements UserServic
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public Map<String, Integer> groupRecommend(List<String> accounts) {
 		String collection = User.class.getAnnotation(Document.class).collection();

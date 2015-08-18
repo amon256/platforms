@@ -112,18 +112,37 @@ public class UserController extends BaseController {
 	@RequestMapping(value="usergragh")
 	public String userGragh(String account,ModelMap model){
 		User existsUser = WebContext.getLoginUser();
-		if(account == null){
+		if(account == null || "".equals(account.trim())){
 			account = existsUser.getAccount();
 		}
 		User user = userService.findOne(Query.query(Criteria.where("account").is(account).and("path").regex("^"+existsUser.getPath())));
 		if(user == null){
 			model.put("msg", "权限不足或该账号不存在");
 		}else{
+			calculDeep(user);
 			List<User> users = userService.findList(Query.query(Criteria.where("path").regex("^" + user.getPath()).and("level").gte(user.getLevel()).lte(user.getLevel() + 2)));
+			for(User u : users){
+				calculDeep(u);
+			}
 			UserNode root = TreeBuild.buildUserTree(users, user);
 			model.put("root", root);
 		}
 		return "user/userGragh";
+	}
+	
+	private void calculDeep(User u){
+		u.setLeftDeep(0);
+		u.setRightDeep(0);
+		Query leftQuery = Query.query(Criteria.where("path").regex("^" + u.getPath() + "0")).with(new Sort(Direction.DESC, "level")).limit(1);
+		Query rightQuery = Query.query(Criteria.where("path").regex("^" + u.getPath() + "1")).with(new Sort(Direction.DESC, "level")).limit(1);
+		User leftMax = userService.findOne(leftQuery);
+		User rightMax = userService.findOne(rightQuery);
+		if(leftMax != null){
+			u.setLeftDeep(leftMax.getLevel() - u.getLevel());
+		}
+		if(rightMax != null){
+			u.setRightDeep(rightMax.getLevel() - u.getLevel());
+		}
 	}
 	
 	@RequestMapping(value="toregister")

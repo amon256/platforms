@@ -19,6 +19,18 @@
 			<li class="active">团队系统</li>
 			<li class="active">安置系统</li>
 		</ul>
+		<%-- <ul style="padding: 8px 15px;  margin-bottom: 20px;  list-style: none;text-align: right;">
+			<li>
+				<form class="form-inline" method="get" action="${ctx }/user/usergragh" style="width: 250px;">
+				<div class="row">
+					<div class="col-xs-8">
+						<input type="text" class="form-control input-sm" value="${root.value.account }" id="account" name="account" placeholder="账号">
+					</div>
+					<div class="col-xs-2"><button type="submit" class="btn btn-primary btn-sm">查询</button></div>
+				</div>
+			</form>
+			</li>
+		</ul> --%>
 		<c:if test="${not empty msg }">
 			<div class="alert alert-warning alert-dismissible" role="alert">
 			  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
