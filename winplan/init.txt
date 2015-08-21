@@ -1,0 +1,13 @@
+http://mirror.bit.edu.cn/apache/tomcat/tomcat-7/v7.0.63/bin/apache-tomcat-7.0.63.tar.gz
+http://nginx.org/download/nginx-1.9.4.tar.gz
+
+http://sourceforge.net/projects/pcre/files/pcre/8.37/pcre-8.37.tar.gz/download
+
+sequence,账号索引
+{ "_id" : "user.account", "currentValue" : 618000}
+
+users,初始用户
+{ "_id" : "1", "name" : "A线", "account" : "QZ1", "password" : "8r9chj9isddb965baop2hlnd08olde6qc", "level" : 0, "nickName" : "A线", "mobile" : "13211111111", "path" : "0", "bonus" : 100000, "totalBonus" : 100000, "leftCount" : 0, "rightCount" : 0}
+
+adminuser,初始管理员
+{ "_id" : "1", "name" : "Administrator", "account" : "admin", "mobile" : "1101111", "status" : "EFFECT", "createTime" : ISODate("2015-08-19T01:13:32.318Z"), "password" : "2h29rbsarcpkc1econoioogqggs78prm8", "roles" : "M0000,M0001,M0002,M0005", "headPhoto" : "/adminLTE/img/avatar5.png" }
