@@ -38,7 +38,7 @@ public class TokenInterceptor extends HandlerInterceptorAdapter {
 					boolean existsToken = TokenContext.validateToken(token);
 					if(!existsToken){
 						//TODO 转到提示页面
-						response.sendRedirect(request.getContextPath() + "/");
+						request.getRequestDispatcher("/WEB-INF/views/common/submitRepeat.jsp").forward(request, response);
 						return false;
 					}
 				}

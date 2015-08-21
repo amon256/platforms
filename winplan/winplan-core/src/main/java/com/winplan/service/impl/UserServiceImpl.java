@@ -108,7 +108,7 @@ public class UserServiceImpl extends DataServiceImpl<User> implements UserServic
 		bonusService.add(his);
 		//发奖金
 		//推荐奖
-		giveTj(user);
+//		giveTj(user);
 		//层奖
 		giveCen(user);
 	}
@@ -186,33 +186,33 @@ public class UserServiceImpl extends DataServiceImpl<User> implements UserServic
 		}
 	}
 	
-	/**
-	 * 发推荐奖
-	 * @param user
-	 */
-	private void giveTj(User user){
-		FindAndModifyOptions options = new FindAndModifyOptions();
-		options.returnNew(true);
-		if(user.getRecommend() != null){
-			int bonus = BonusContext.getRecommendBonus();
-			User rec = getMongoTemplate().findAndModify(
-						Query.query(Criteria.where("account").is(user.getRecommend())), 
-						Update.update("lastUpdateTime", new Date()).inc("bonus", bonus).inc("totalBonus", bonus),
-						options, 
-						User.class);
-			if(rec != null){
-				logger.debug("{}推荐奖:{}",rec.getAccount(),bonus);
-				BonusHistory his = new BonusHistory();
-				his.setAccount(rec.getAccount());
-				his.setBonus(BigDecimal.valueOf(bonus));
-				his.setSurplus(rec.getBonus());
-				his.setType(BonusTypeEnum.BONUS_TJ);
-				his.setTotalBonus(rec.getTotalBonus());
-				his.setDesc(MessageFormat.format("推荐{0}获推荐奖{1}",user.getAccount(),bonus));
-				bonusService.add(his);
-			}
-		}
-	}
+//	/**
+//	 * 发推荐奖
+//	 * @param user
+//	 */
+//	private void giveTj(User user){
+//		FindAndModifyOptions options = new FindAndModifyOptions();
+//		options.returnNew(true);
+//		if(user.getRecommend() != null){
+//			int bonus = BonusContext.getRecommendBonus();
+//			User rec = getMongoTemplate().findAndModify(
+//						Query.query(Criteria.where("account").is(user.getRecommend())), 
+//						Update.update("lastUpdateTime", new Date()).inc("bonus", bonus).inc("totalBonus", bonus),
+//						options, 
+//						User.class);
+//			if(rec != null){
+//				logger.debug("{}推荐奖:{}",rec.getAccount(),bonus);
+//				BonusHistory his = new BonusHistory();
+//				his.setAccount(rec.getAccount());
+//				his.setBonus(BigDecimal.valueOf(bonus));
+//				his.setSurplus(rec.getBonus());
+//				his.setType(BonusTypeEnum.BONUS_TJ);
+//				his.setTotalBonus(rec.getTotalBonus());
+//				his.setDesc(MessageFormat.format("推荐{0}获推荐奖{1}",user.getAccount(),bonus));
+//				bonusService.add(his);
+//			}
+//		}
+//	}
 	
 	@Override
 	public Map<String, Integer> groupRecommend(List<String> accounts) {

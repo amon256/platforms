@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menus>
+	<menu id="M0000" name="首页" page="P0000" default="true">
+		<page id="P0000" name="主页" default="true">/homepage</page>
+		<page id="P0001" name="重复提交">/submitRepeat</page>
+		<page id="P0002" name="权限不足">/noPermission</page>
+		<page id="P0003" name="配置">/adminuser/toProfile</page>
+		<page id="P0004" name="保存配置">/adminuser/profile</page>
+		<page id="P0005" name="修改密码">/adminuser/toPassword</page>
+		<page id="P0006" name="保存密码">/adminuser/password</page>
+	</menu>
+	<group id="G0001" name="用户管理">
+		<menu id="M0001" name="管理员" page="P0101">
+			<page id="P0101" name="管理员列表">/adminuser/list</page>
+			<page id="P0102" name="管理员新增页面">/adminuser/toAdd</page>
+			<page id="P0103" name="管理员新增">/adminuser/add</page>
+			<page id="P0104" name="管理员修改页面">/adminuser/toUpdate</page>
+			<page id="P0105" name="管理员修改">/adminuser/update</page>
+			<page id="P0106" name="管理员激活页面">/adminuser/toEffect</page>
+			<page id="P0107" name="管理员激活">/adminuser/effect</page>
+			<page id="P0108" name="管理员禁止">/adminuser/disabled</page>
+		</menu>
+		<menu id="M0002" name="用户管理" page="P0201">
+			<page id="P0201" name="用户列表">/user/list</page>
+		</menu>
+	</group>
+	<menu id="M0003" name="提现管理" url="">
+	</menu>
+	<menu id="M0004" name="奖金管理" url="">
+	</menu>
+	<menu id="M0005" name="报表查询" url="">
+	</menu>
+</menus>

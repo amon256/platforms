@@ -82,6 +82,12 @@
 		<servlet-name>default</servlet-name>
 		<url-pattern>*.xml</url-pattern>
 	</servlet-mapping>
+	<jsp-config>
+		<taglib>
+			<taglib-uri>/custom/lib</taglib-uri>
+			<taglib-location>/WEB-INF/tld/custom.tld</taglib-location>
+		</taglib>
+	</jsp-config>
 	<welcome-file-list>
 		index.jsp
 	</welcome-file-list>

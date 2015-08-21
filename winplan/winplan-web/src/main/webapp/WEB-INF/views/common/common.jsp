@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-String port = request.getLocalPort()==80?"":":"+request.getLocalPort();
+String port = request.getServerPort()==80?"":":"+request.getServerPort();
 String ctx = request.getScheme()+"://"+request.getServerName()+port+request.getContextPath();
 request.setAttribute("ctx", ctx);
 %>

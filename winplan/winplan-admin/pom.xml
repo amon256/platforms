@@ -17,8 +17,14 @@
   	<artifactId>winplan-core</artifactId>
   	<version>1.0</version>
   </dependency>
+  <dependency>
+  	<groupId>org.jdom</groupId>
+  	<artifactId>jdom</artifactId>
+  	<version>1.1</version>
+  </dependency>
   </dependencies>
   <build>
+  		<finalName>admin</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -36,7 +42,7 @@
 				<version>8.1.15.v20140411</version>
 				<configuration>
 					<webApp>
-						<contextPath>/winplanadmin</contextPath>
+						<contextPath>/admin</contextPath>
 					</webApp>
 					<scanIntervalSeconds>1</scanIntervalSeconds>
 					<connectors>

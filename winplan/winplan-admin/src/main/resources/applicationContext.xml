@@ -63,12 +63,21 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 	
-	
+	<!-- 权限配置加载 -->
+	<bean class="com.winplan.permission.PermissionManagerImpl" lazy-init="false">
+		<property name="menuFile" value="classpath*:permission/menus.xml"/>
+	</bean>
+		
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**"/>
 			<bean class="com.winplan.interceptors.LoginInterceptor">
 				<property name="exclude" value="/login"/>
+			</bean>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean class="com.winplan.interceptors.PermissionInterceptor">
 			</bean>
 		</mvc:interceptor>
 		<mvc:interceptor>

@@ -3,6 +3,13 @@
  */
 package com.winplan.entity;
 
+import java.util.Date;
+
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.winplan.enums.AdminUserStatusEnum;
+
 
 /**  
  * 功能描述：管理员用户
@@ -10,6 +17,7 @@ package com.winplan.entity;
  * @author FengMy
  * @since 2015年8月18日
  */
+@Document(collection="adminuser")
 public class AdminUser extends DataEntity {
 	private static final long serialVersionUID = -3038906912633866697L;
 
@@ -21,6 +29,7 @@ public class AdminUser extends DataEntity {
 	/**
 	 * 账号
 	 */
+	@Indexed(unique=true)
 	private String account;
 	
 	/**
@@ -39,10 +48,25 @@ public class AdminUser extends DataEntity {
 	private String description;
 	
 	/**
+	 * 管理员状态
+	 */
+	private AdminUserStatusEnum status;
+	
+	/**
 	 * 上次登录时间
 	 */
-	private String lastLoginTime;
+	private Date lastLoginTime;
+	
+	/**
+	 * 角色
+	 */
+	private String roles;
 
+	/**
+	 * 头像
+	 */
+	private String headPhoto;
+	
 	public String getName() {
 		return name;
 	}
@@ -83,11 +107,35 @@ public class AdminUser extends DataEntity {
 		this.description = description;
 	}
 
-	public String getLastLoginTime() {
+	public Date getLastLoginTime() {
 		return lastLoginTime;
 	}
 
-	public void setLastLoginTime(String lastLoginTime) {
+	public void setLastLoginTime(Date lastLoginTime) {
 		this.lastLoginTime = lastLoginTime;
+	}
+
+	public AdminUserStatusEnum getStatus() {
+		return status;
+	}
+
+	public void setStatus(AdminUserStatusEnum status) {
+		this.status = status;
+	}
+
+	public String getRoles() {
+		return roles;
+	}
+
+	public void setRoles(String roles) {
+		this.roles = roles;
+	}
+
+	public String getHeadPhoto() {
+		return headPhoto;
+	}
+
+	public void setHeadPhoto(String headPhoto) {
+		this.headPhoto = headPhoto;
 	}
 }
