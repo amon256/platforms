@@ -10,6 +10,7 @@
   	<module>winplan-web</module>
     <module>winplan-core</module>
     <module>winplan-admin</module>
+    <module>winplan-framework</module>
   </modules>
   <build>
 		<plugins>

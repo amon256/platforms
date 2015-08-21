@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.winplan.context.WebContext;
-import com.winplan.entity.AdminUser;
+import com.winplan.entity.Roleable;
 import com.winplan.permission.PermissionManager;
 import com.winplan.permission.PermissionUtil;
 import com.winplan.spring.ApplicationContextAware;
@@ -40,16 +40,16 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 			return true;
 		}
 		logger.debug("accept request is in permission control.");
-		AdminUser adminUser = WebContext.getLoginUser();
+		Roleable user = WebContext.getLoginUser();
 		boolean isAllow = false;
-		if(adminUser != null && adminUser.getRoles() != null){
+		if(user != null && user.getRoles() != null){
 			if("/index".equals(path.trim())){
 				String pathId = request.getParameter("_p");
 				if(pathId == null || (path = PermissionUtil.getPageUrlById(pathId)) == null){
 					return true;
 				}
 			}
-			List<String> roles = CollectionUtils.createList(String.class, adminUser.getRoles().split(","));
+			List<String> roles = CollectionUtils.createList(String.class, user.getRoles().split(","));
 			if(manager.validatePermission(path, roles)){
 				isAllow = true;
 				logger.debug("accept is allow.");

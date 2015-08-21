@@ -248,7 +248,8 @@ public class UserController extends BaseController {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		List<User> users = new LinkedList<User>();
 		if(account == null || "".equals(account.trim())){
-			users.add(WebContext.getLoginUser());
+			User user = WebContext.getLoginUser();
+			users.add(user);
 		}else{
 			Query query = Query.query(Criteria.where("recommend").is(account)).with(new Sort(Direction.ASC, "createTime"));
 			users = userService.findList(query);

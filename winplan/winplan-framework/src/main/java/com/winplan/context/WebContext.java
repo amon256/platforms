@@ -10,8 +10,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.winplan.entity.AdminUser;
-
 /**  
  * 功能描述：
  * 
@@ -39,17 +37,18 @@ public class WebContext {
 	 * 获取登录用户
 	 * @return
 	 */
-	public static AdminUser getLoginUser(){
+	@SuppressWarnings("unchecked")
+	public static <T> T getLoginUser(){
 		ServletRequestAttributes attrs =(ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
 		HttpSession session = attrs.getRequest().getSession();
-		return (AdminUser) session.getAttribute(LOGIN_USER_KEY);
+		return (T) session.getAttribute(LOGIN_USER_KEY);
 	}
 	
 	/**
 	 * 登录
 	 * @param user
 	 */
-	public static void login(AdminUser user){
+	public static <T> void login(T user){
 		ServletRequestAttributes attrs =(ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
 		HttpSession session = attrs.getRequest().getSession();
 		session.setAttribute(LOGIN_USER_KEY, user);

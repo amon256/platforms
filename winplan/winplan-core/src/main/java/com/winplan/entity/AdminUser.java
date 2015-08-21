@@ -18,7 +18,7 @@ import com.winplan.enums.AdminUserStatusEnum;
  * @since 2015年8月18日
  */
 @Document(collection="adminuser")
-public class AdminUser extends DataEntity {
+public class AdminUser extends DataEntity implements Roleable{
 	private static final long serialVersionUID = -3038906912633866697L;
 
 	/**

@@ -59,7 +59,8 @@ public class BonusController extends BaseController {
 		}else if(bonus.compareTo(BigDecimal.ZERO) <= 0){
 			model.put("msg", "转账金额必须大于0.");
 		}else{
-			bonusService.transfer(WebContext.getLoginUser(), to, bonus,desc);
+			User user = WebContext.getLoginUser();
+			bonusService.transfer(user, to, bonus,desc);
 			model.put("succ", "转账成功.");
 		}
 		User user = WebContext.getLoginUser();
