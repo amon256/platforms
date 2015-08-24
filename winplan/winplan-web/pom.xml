@@ -6,6 +6,7 @@
   <name>winplan Maven Webapp</name>
   <url>http://maven.apache.org</url>
   <build>
+  		<finalName>winplan</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
