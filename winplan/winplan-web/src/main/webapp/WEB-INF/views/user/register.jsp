@@ -1,22 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-<jsp:include page="../common/common.jsp"></jsp:include>
-</head>
-<body>
-	<div class="container-fluid">
-		<jsp:include page="../common/head.jsp" flush="true"></jsp:include>
-		<ul class="breadcrumb">
-			<li><a href="${ctx }/index">主页面</a></li>
-		</ul>
-		<ul class="breadcrumb">
-			<li><a href="${ctx }/main">总汇页面</a></li>
-			<li class="active">会员注册</li>
-		</ul>
-		<form role="form" class="form-horizontal" action="${ctx }/user/register" method="post">
+<%@ taglib uri="/custom/lib" prefix="cus" %>
+		<form role="form" class="form-horizontal" action="${ctx }/${cus:url(activeMenu.id,'/user/register')}" method="post">
 			<input type="hidden" name="__TOKEN__" value="${__TOKEN__ }"/>
 			<c:if test="${not empty msg }">
 				<div class="alert alert-warning alert-dismissible" role="alert">
@@ -67,7 +53,7 @@
 					<input type="text" class="form-control" id="mobile" name="mobile" value="${user.mobile }" />
 				</div>
 			</div>
-			<button type="submit" class="btn btn-primary">确定注册</button>&nbsp;<button type="button" class="btn btn-info" onclick="window.history.go(-1);">返回</button>
+			<button type="submit" class="btn btn-primary">确定注册</button>
 		</form>
 	</div>
 </body>

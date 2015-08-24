@@ -1,23 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-<jsp:include page="../common/common.jsp"></jsp:include>
-</head>
-<body>
+<%@ taglib uri="/custom/lib" prefix="cus" %>
 	<div class="container-fluid">
-		<jsp:include page="../common/head.jsp" flush="true"></jsp:include>
-		<ul class="breadcrumb">
-			<li><a href="${ctx }/index">主页面</a></li>
-		</ul>
-		<ul class="breadcrumb">
-			<li><a href="${ctx }/main">总汇页面</a></li>
-			<li class="active">我的资料</li>
-			<li class="active">修改登录密码</li>
-		</ul>
-		<form id="editUser" role="form" class="form-horizontal" action="${ctx }/user/changepwd" method="post">
+		<form id="editUser" role="form" class="form-horizontal" action="${ctx }/${cus:url(activeMenu.id,'/user/changepwd')}" method="post">
 			<c:if test="${not empty msg }">
 				<div class="alert alert-warning alert-dismissible" role="alert">
 				  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -54,8 +40,6 @@
 					<input type="password" class="form-control" id="npwd1" name="npwd1" value="" />
 				</div>
 			</div>
-			<button type="submit" class="btn btn-primary">修改登录密码</button>&nbsp;<button type="button" class="btn btn-info" onclick="window.history.go(-1);">返回</button>
+			<button type="submit" class="btn btn-primary">修改登录密码</button>
 		</form>
 	</div>
-</body>
-</html>

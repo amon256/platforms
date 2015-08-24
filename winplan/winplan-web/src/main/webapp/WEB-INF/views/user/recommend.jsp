@@ -1,11 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-<jsp:include page="../common/common.jsp"></jsp:include>
+<%@ taglib uri="/custom/lib" prefix="cus" %>
 <link href="${ctx }/zTree_v3/css/zTreeStyle/zTreeStyle.css" rel="stylesheet">
 <script type="text/javascript" src="${ctx }/zTree_v3/js/jquery.ztree.core-3.5.js"></script>
-</head>
 <script type="text/javascript">
 	var setting = {
 		view: {
@@ -36,18 +32,6 @@
 		$.fn.zTree.init($("#recommendTree"), setting);
 	});
 </script>
-<body>
 	<div class="container-fluid">
-		<jsp:include page="../common/head.jsp" flush="true"></jsp:include>
-		<ul class="breadcrumb">
-			<li><a href="${ctx }/index">主页面</a></li>
-		</ul>
-		<ul class="breadcrumb">
-			<li><a href="${ctx }/main">总汇页面</a></li>
-			<li class="active">团队系统</li>
-			<li class="active">介绍系统</li>
-		</ul>
 		<ul id="recommendTree" class="ztree"></ul>
 	</div>
-</body>
-</html>

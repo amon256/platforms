@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menus>
+	<menu id="M0000" name="首页" page="P0000" default="true">
+		<page id="P0000" name="主页" default="true">/main</page>
+		<page id="P0001" name="重复提交">/submitRepeat</page>
+		<page id="P0002" name="权限不足">/noPermission</page>
+		<page id="P0003" name="修改个人信息">/user/useredit</page>
+		<page id="P0004" name="保存个人信息">/user/userSave</page>
+		<page id="P0005" name="修改密码">/user/password</page>
+		<page id="P0006" name="保存密码">/user/changepwd</page>
+	</menu>
+	<group id="G0001" name="财务总汇">
+		<menu id="M0001" name="奖金记录" page="P0101">
+			<page id="P0101" name="奖金记录">/bonus/bonushistory</page>
+		</menu>
+		<menu id="M0002" name="奖金汇总记录" page="P0201">
+			<page id="P0201" name="奖金汇总记录">/bonus/totalhistory</page>
+		</menu>
+		<menu id="M0003" name="奖金转让" page="P0301">
+			<page id="P0301" name="奖金转让">/bonus/totransfer</page>
+			<page id="P0302" name="奖金转让">/bonus/transfer</page>
+		</menu>
+		<menu id="M0004" name="奖金转让记录" page="P0401">
+			<page id="P0401" name="奖金转让记录">/bonus/transferhistory</page>
+		</menu>
+	</group>
+	<group id="G0002" name="团队系统">
+		<menu id="M0005" name="介绍系统" page="P0501">
+			<page id="P0501" name="介绍系统">/user/recommend</page>
+		</menu>
+		<menu id="M0006" name="安置系统" page="P0601">
+			<page id="P0601" name="安置系统">/user/usergragh</page>
+			<page id="P0602" name="用户信息">/user/userinfo</page>
+			<page id="P0603" name="注册用户">/user/toregister</page>
+			<page id="P0604" name="保存注册用户">/user/register</page>
+		</menu>
+	</group>
+	
+</menus>

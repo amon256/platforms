@@ -66,12 +66,11 @@ public class UserController extends BaseController {
 	@RequestMapping(value="userSave")
 	public String userSave(User user,ModelMap model){
 		User existsUser = WebContext.getLoginUser();
-		existsUser = userService.findById(existsUser.getId());
 		if(existsUser != null){
 			existsUser.setMobile(user.getMobile());
 			existsUser.setNickName(user.getNickName());
-			userService.update(existsUser, CollectionUtils.createSet(String.class, "mobile","nickName"));
-			WebContext.login(existsUser);
+			existsUser.setHeadPhoto(user.getHeadPhoto());
+			userService.update(existsUser, CollectionUtils.createSet(String.class, "mobile","nickName","headPhoto"));
 			model.put("user", existsUser);
 			model.put("succ", "信息修改成功.");
 		}

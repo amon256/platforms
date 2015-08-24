@@ -1,22 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-<jsp:include page="../common/common.jsp"></jsp:include>
-</head>
-<body>
+<%@ taglib uri="/custom/lib" prefix="cus" %>
 	<div class="container-fluid">
-		<jsp:include page="../common/head.jsp" flush="true"></jsp:include>
-		<ul class="breadcrumb">
-			<li><a href="${ctx }/index">主页面</a></li>
-		</ul>
-		<ul class="breadcrumb">
-			<li><a href="${ctx }/main">总汇页面</a></li>
-			<li class="active">财务总汇</li>
-			<li class="active">奖金转让记录</li>
-		</ul>
 		<table class="table table-striped table-hover table-bordered">
 			<thead>
 				<tr>
@@ -60,12 +46,10 @@
 				<tr>
 					<td colspan="7">
 						<jsp:include page="../common/pagination.jsp" flush="true">
-							<jsp:param value="bonus/transferhistory" name="url"/>
+							<jsp:param value="${cus:url(activeMenu.id,'/bonus/transferhistory') }" name="url"/>
 						</jsp:include>
 					</td>
 				</tr>
 			</tfoot>
 		</table>
 	</div>
-</body>
-</html>

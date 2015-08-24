@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="/custom/lib" prefix="cus" %>
 <c:choose>
 	<c:when test="${not empty graphNode }">
 		<table width="120" border="0" cellspacing="0" cellpadding="0">
@@ -18,7 +19,7 @@
 												<tr>
 		
 													<td colspan="3" align="center"><div style="height: 25px; margin-top: 5px">
-															<a href="${ctx }/user/usergragh?account=${graphNode.value.account}" style="color: #fff; font-size: 16px"><b>${graphNode.value.account }</b></a>
+															<a href="${ctx }/${cus:url(activeMenu.id,'/user/usergragh')}&account=${graphNode.value.account}" style="color: #fff; font-size: 16px"><b>${graphNode.value.account }</b></a>
 														</div>
 														<table cellpadding="0" cellspacing="0" border="0" style="width: 100%">
 															<tbody>
@@ -30,7 +31,7 @@
 														<table>
 															<tbody>
 																<tr>
-																	<td align="left"><a href="${ctx }/user/userinfo?id=${graphNode.value.id}" style="color: #fff">姓名: ${graphNode.value.name }<br>昵称: ${graphNode.value.nickName }
+																	<td align="left"><a href="${ctx }/${cus:url(activeMenu.id,'/user/userinfo')}&id=${graphNode.value.id}" style="color: #fff">姓名: ${graphNode.value.name }<br>昵称: ${graphNode.value.nickName }
 																	</a></td>
 																</tr>
 															</tbody>
@@ -71,7 +72,7 @@
 		<table border="1" cellpadding="0" cellspacing="0" style="background-color: #CCC; width: 120px; color: #fff">
 			<tbody>
 				<tr>
-					<td height="30" align="center"><a href="${ctx }/user/toregister?parentAccount=${parentAccount}&dir=${dir}">注册下属</a></td>
+					<td height="30" align="center"><a href="${ctx }/${cus:url(activeMenu.id,'/user/toregister')}&parentAccount=${parentAccount}&dir=${dir}">注册下属</a></td>
 				</tr>
 			</tbody>
 		</table>

@@ -102,6 +102,11 @@ public class User extends DataEntity {
 	 */
 	private String recommend;
 	
+	/**
+	 * 头像
+	 */
+	private String headPhoto;
+	
 	public String getAccount() {
 		return account;
 	}
@@ -228,6 +233,14 @@ public class User extends DataEntity {
 
 	public void setRightDeep(int rightDeep) {
 		this.rightDeep = rightDeep;
+	}
+
+	public String getHeadPhoto() {
+		return headPhoto;
+	}
+
+	public void setHeadPhoto(String headPhoto) {
+		this.headPhoto = headPhoto;
 	}
 	
 	

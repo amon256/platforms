@@ -1,21 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-<jsp:include page="../common/common.jsp"></jsp:include>
-</head>
-<body>
+
 	<div class="container-fluid">
-		<jsp:include page="../common/head.jsp" flush="true"></jsp:include>
-		<ul class="breadcrumb">
-			<li><a href="${ctx }/index">主页面</a></li>
-		</ul>
-		<ul class="breadcrumb">
-			<li><a href="${ctx }/main">总汇页面</a></li>
-			<li class="active">用户信息</li>
-		</ul>
 		<form id="editUser" role="form" class="form-horizontal" action="#" method="post">
 			<c:if test="${not empty msg }">
 				<div class="alert alert-warning alert-dismissible" role="alert">
@@ -53,8 +40,5 @@
 					<input type="text" class="form-control" id="createTime" readonly="readonly" readonly="readonly" value="<fmt:formatDate value="${user.createTime }" pattern="yyyy年M月d日"/>" />
 				</div>
 			</div>
-			<button type="button" class="btn btn-info" onclick="window.history.go(-1);">返回</button>
 		</form>
 	</div>
-</body>
-</html>

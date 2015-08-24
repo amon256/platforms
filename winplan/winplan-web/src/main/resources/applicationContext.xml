@@ -63,6 +63,9 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 	
+	<bean class="com.winplan.permission.PermissionManagerImpl" lazy-init="false">
+		<property name="menuFile" value="classpath*:permission/menus.xml"/>
+	</bean>
 	
 	<mvc:interceptors>
 		<mvc:interceptor>

@@ -1,24 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-<jsp:include page="../common/common.jsp"></jsp:include>
-<link href="${ctx }/bootstrap/bootstrap-treenav/css/bootstrap-treenav.min.css" rel="stylesheet">
-<script type="text/javascript" src="${ctx }/bootstrap/bootstrap-treenav/js/bootstrap-treenav.min.js"></script>
-</head>
-<body>
 	<div class="container-fluid">
-		<jsp:include page="../common/head.jsp" flush="true"></jsp:include>
-		<ul class="breadcrumb">
-			<li><a href="${ctx }/index">主页面</a></li>
-		</ul>
-		<ul class="breadcrumb">
-			<li><a href="${ctx }/main">总汇页面</a></li>
-			<li class="active">团队系统</li>
-			<li class="active">安置系统</li>
-		</ul>
 		<%-- <ul style="padding: 8px 15px;  margin-bottom: 20px;  list-style: none;text-align: right;">
 			<li>
 				<form class="form-inline" method="get" action="${ctx }/user/usergragh" style="width: 250px;">
@@ -45,7 +28,7 @@
 							<td colspan="4" align="center">
 							<%-- 第0层 --%>
 								<c:set var="graphNode" value="${root }"  scope="request"/>
-								<c:import url="graph.jsp" />
+								<c:import url="user/graph.jsp" />
 							</td>
 						</tr>
 						<%-- 0-1连接线 --%>
@@ -95,14 +78,14 @@
 								<c:set var="graphNode" value="${root.left }"  scope="request"/>
 								<c:set var="parentAccount" value="${root.value.account }" scope="request"/>
 								<c:set var="dir" value="left" scope="request"/>
-								<c:import url="graph.jsp" />
+								<c:import url="user/graph.jsp" />
 							</td>
 							<td width="50%" colspan="2" align="center" valign="top">
 								<%-- 第1层右 --%>
 								<c:set var="graphNode" value="${root.right }"  scope="request"/>
 								<c:set var="parentAccount" value="${root.value.account }" scope="request"/>
 								<c:set var="dir" value="right" scope="request"/>
-								<c:import url="graph.jsp" />
+								<c:import url="user/graph.jsp" />
 							</td>
 						</tr>
 <c:if test="${(not empty root.left) or (not empty root.right) }">
@@ -200,7 +183,7 @@
 								<c:set var="graphNode" value="${root.left.left }"  scope="request"/>
 								<c:set var="parentAccount" value="${root.left.value.account }" scope="request"/>
 								<c:set var="dir" value="left" scope="request"/>
-								<c:import url="graph.jsp" />
+								<c:import url="user/graph.jsp" />
 </c:if>
 							</td>
 							<td width="25%" align="center" valign="top">
@@ -209,7 +192,7 @@
 								<c:set var="graphNode" value="${root.left.right }"  scope="request"/>
 								<c:set var="parentAccount" value="${root.left.value.account }" scope="request"/>
 								<c:set var="dir" value="right" scope="request"/>
-								<c:import url="graph.jsp" />
+								<c:import url="user/graph.jsp" />
 </c:if>
 							</td>
 							<td width="25%" align="center" valign="top">
@@ -218,7 +201,7 @@
 								<c:set var="graphNode" value="${root.right.left }" scope="request"/>
 								<c:set var="parentAccount" value="${root.right.value.account }" scope="request"/>
 								<c:set var="dir" value="left" scope="request"/>
-								<c:import url="graph.jsp" />
+								<c:import url="user/graph.jsp" />
 </c:if>
 							</td>
 							<td width="25%" align="center" valign="top">
@@ -227,7 +210,7 @@
 								<c:set var="graphNode" value="${root.right.right }"  scope="request"/>
 								<c:set var="parentAccount" value="${root.right.value.account }" scope="request"/>
 								<c:set var="dir" value="right" scope="request"/>
-								<c:import url="graph.jsp" />
+								<c:import url="user/graph.jsp" />
 </c:if>
 							</td>
 						</tr>
@@ -240,5 +223,3 @@
 			<div style="height: 10px;"></div>
 		</div>
 	</div>
-</body>
-</html>
