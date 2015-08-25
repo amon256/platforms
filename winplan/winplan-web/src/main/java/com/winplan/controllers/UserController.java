@@ -70,7 +70,10 @@ public class UserController extends BaseController {
 			existsUser.setMobile(user.getMobile());
 			existsUser.setNickName(user.getNickName());
 			existsUser.setHeadPhoto(user.getHeadPhoto());
-			userService.update(existsUser, CollectionUtils.createSet(String.class, "mobile","nickName","headPhoto"));
+			existsUser.setCardNumber(user.getCardNumber());
+			existsUser.setBankName(user.getBankName());
+			existsUser.setBankAddress(user.getBankAddress());
+			userService.update(existsUser, CollectionUtils.createSet(String.class, "mobile","nickName","headPhoto","cardNumber","bankName","bankAddress"));
 			model.put("user", existsUser);
 			model.put("succ", "信息修改成功.");
 		}

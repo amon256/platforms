@@ -98,7 +98,7 @@ html,body {
 				</div>
 			</c:if>
 			<div class="login-title text-center">
-				<h1><small>JK Group</small></h1>
+				<h1><small>JK Group Manager</small></h1>
 			</div>
 			<div class="login-content ">
 				<div class="form">

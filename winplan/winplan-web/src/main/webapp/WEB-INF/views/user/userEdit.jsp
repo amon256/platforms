@@ -47,6 +47,24 @@
 				</div>
 			</div>
 			<div class="form-group">
+				<label for="cardNumber" class="col-sm-2 control-label">银行卡号：</label>
+				<div class="col-sm-6">
+					<input type="text" class="form-control" id="cardNumber" name="cardNumber" value="${user.cardNumber }" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="bankName" class="col-sm-2 control-label">开户行：</label>
+				<div class="col-sm-6">
+					<input type="text" class="form-control" id="bankName" name="bankName" value="${user.bankName }" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="bankAddress" class="col-sm-2 control-label">开户行地址：</label>
+				<div class="col-sm-6">
+					<input type="text" class="form-control" id="bankAddress" name="bankAddress" value="${user.bankAddress }" />
+				</div>
+			</div>
+			<div class="form-group">
 				<label for="roles" class="col-sm-2 control-label">头像：</label>
 				<div class="col-sm-6">
 					<label class="radio-inline">

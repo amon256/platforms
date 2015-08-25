@@ -15,6 +15,15 @@
 			  	${succ }
 			</div>
 		</c:if>
+		<form action="${ctx }/index" method="get" class="form-inline">
+			<input type="hidden" name="_m" value="${activeMenu.id }"/>
+			<input type="hidden" name="_p" value="${cus:pageId('/bonuscash/applyList') }"/>
+			<div class="form-group">
+			    <label for="account">账号</label>
+			    <input type="text" class="form-control" id="account" name="account" placeholder="用户账号" value="${queryUser.account }">
+		  	</div>
+			<button type="submit" class="btn btn-default">查询</button>
+		</form>
 		<table class="table table-striped table-hover table-bordered">
 			<thead>
 				<tr>
@@ -61,7 +70,7 @@
 				<tr>
 					<td colspan="6">
 						<jsp:include page="../common/pagination.jsp" flush="true">
-							<jsp:param value="${cus:url(activeMenu.id,'/bonuscash/applyList') }" name="url"/>
+							<jsp:param value="${cus:url(activeMenu.id,'/bonuscash/applyList') }&account=${queryUser.account }" name="url"/>
 						</jsp:include>
 					</td>
 				</tr>

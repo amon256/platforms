@@ -25,6 +25,24 @@
 				</div>
 			</div>
 			<div class="form-group">
+				<label class="col-sm-2 control-label">银行卡号：</label>
+				<div class="col-sm-6">
+					<span class="form-control-static">${apply.applyer.cardNumber }</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">开户行：</label>
+				<div class="col-sm-6">
+					<span class="form-control-static">${apply.applyer.bankName }</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">开户行地址：</label>
+				<div class="col-sm-6">
+					<span class="form-control-static">${apply.applyer.bankAddress }</span>
+				</div>
+			</div>
+			<div class="form-group">
 				<label class="col-sm-2 control-label">电话：</label>
 				<div class="col-sm-6">
 					<span class="form-control-static">${apply.applyer.mobile }</span>

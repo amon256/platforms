@@ -107,6 +107,21 @@ public class User extends DataEntity {
 	 */
 	private String headPhoto;
 	
+	/**
+	 * 银行帐号
+	 */
+	private String cardNumber;
+	
+	/**
+	 * 开户行
+	 */
+	private String bankName;
+	
+	/**
+	 * 开户行地址
+	 */
+	private String bankAddress;
+	
 	public String getAccount() {
 		return account;
 	}
@@ -243,5 +258,27 @@ public class User extends DataEntity {
 		this.headPhoto = headPhoto;
 	}
 	
-	
+	public String getCardNumber() {
+		return cardNumber;
+	}
+
+	public void setCardNumber(String cardNumber) {
+		this.cardNumber = cardNumber;
+	}
+
+	public String getBankName() {
+		return bankName;
+	}
+
+	public void setBankName(String bankName) {
+		this.bankName = bankName;
+	}
+
+	public String getBankAddress() {
+		return bankAddress;
+	}
+
+	public void setBankAddress(String bankAddress) {
+		this.bankAddress = bankAddress;
+	}
 }

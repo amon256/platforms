@@ -48,7 +48,7 @@ public class BonusCashApplyController extends BaseController {
 	@RequestMapping(value="applyList")
 	public String applyList(Pagination pagination,User user,ModelMap model){
 		Query query = new Query();
-		if(user != null && user.getAccount() != null){
+		if(user != null && user.getAccount() != null && !"".equals(user.getAccount().trim())){
 			user = userService.findByAccount(user.getAccount());
 			if(user != null){
 				query.addCriteria(Criteria.where("applyer.$id").is(user.getId()));
@@ -62,6 +62,7 @@ public class BonusCashApplyController extends BaseController {
 		List<BonusCashApply> historys = applyService.findList(query);
 		model.put("datas", historys);
 		model.put("pagination", pagination);
+		model.put("queryUser", user);
 		return "bonuscash/applyList";
 	}
 	
