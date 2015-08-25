@@ -27,6 +27,7 @@ public abstract class BaseController {
 	
 	protected static String STATUS = "status";
 	protected static String MSG = "msg";
+	protected static String SUCC = "succ";
 	
 	/**
 	 * 异常处理

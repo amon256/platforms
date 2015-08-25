@@ -24,10 +24,13 @@
 			<page id="P0201" name="用户列表">/user/list</page>
 		</menu>
 	</group>
-	<menu id="M0003" name="提现管理" url="">
+	<menu id="M0003" name="提现管理" page="P0301">
+		<page id="P0301" name="申请列表">/bonuscash/applyList</page>
+		<page id="P0302" name="提现处理">/bonuscash/toProcess</page>
+		<page id="P0303" name="提现处理">/bonuscash/process</page>
 	</menu>
-	<menu id="M0004" name="奖金管理" url="">
+	<menu id="M0004" name="奖金管理" page="">
 	</menu>
-	<menu id="M0005" name="报表查询" url="">
+	<menu id="M0005" name="报表查询" page="">
 	</menu>
 </menus>
