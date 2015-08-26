@@ -15,10 +15,12 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 
+import com.mongodb.DBObject;
 import com.winplan.entity.CoreEntity;
 import com.winplan.entity.Sequence;
 import com.winplan.service.CoreService;
@@ -152,5 +154,11 @@ public abstract class CoreServiceImpl<T extends CoreEntity> implements CoreServi
 	 */
 	public MongoTemplate getMongoTemplate() {
 		return mongoTemplate;
+	}
+	
+	@Override
+	public DBObject group(DBObject keys, DBObject condition, DBObject initial, String reduce, String finalize) {
+		String collectionName = getCurrentClass().getAnnotation(Document.class).collection();
+		return mongoTemplate.getCollection(collectionName ).group(keys, condition, initial, reduce, finalize);
 	}
 }

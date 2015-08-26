@@ -29,8 +29,14 @@
 		<page id="P0302" name="提现处理">/bonuscash/toProcess</page>
 		<page id="P0303" name="提现处理">/bonuscash/process</page>
 	</menu>
-	<menu id="M0004" name="奖金管理" page="">
+	<menu id="M0004" name="消费管理" page="P0401">
+		<page id="P0401" name="消费查询">/consume/list</page>
+		<page id="P0402" name="消费新增">/consume/toAdd</page>
+		<page id="P0403" name="消费保存">/consume/add</page>
+		<page id="P0404" name="返现明细">/consume/detail</page>
 	</menu>
-	<menu id="M0005" name="报表查询" page="">
+	<menu id="M0005" name="奖金管理" page="">
+	</menu>
+	<menu id="M0006" name="报表查询" page="">
 	</menu>
 </menus>

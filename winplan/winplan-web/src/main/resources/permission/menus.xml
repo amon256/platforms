@@ -28,6 +28,11 @@
 			<page id="P0107" name="奖金提现">/bonuscash/toApply</page>
 			<page id="P0108" name="奖金提现">/bonuscash/apply</page>
 		</menu>
+		<menu id="M0106" name="返现查询" page="P0109">
+			<page id="P0109" name="消费记录">/consume/list</page>
+			<page id="P0410" name="返现明细">/consume/detail</page>
+		</menu>
+		
 	</group>
 	<group id="G0002" name="团队系统">
 		<menu id="M0201" name="介绍系统" page="P0201">

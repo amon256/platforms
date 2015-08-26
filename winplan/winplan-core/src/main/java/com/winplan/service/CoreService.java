@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 
+import com.mongodb.DBObject;
 import com.winplan.entity.CoreEntity;
 
 /**  
@@ -81,5 +82,12 @@ public interface CoreService<T extends CoreEntity> {
 	 * @return
 	 */
 	public int getNextInt(String key);
+	
+	/**
+	 * 分组查询
+	 * @param command
+	 * @return
+	 */
+	public DBObject group(DBObject keys, DBObject condition, DBObject initial, String reduce, String finalize);
 	
 }
