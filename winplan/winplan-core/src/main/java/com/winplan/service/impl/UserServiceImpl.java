@@ -35,9 +35,11 @@ import com.mongodb.DBObject;
 import com.winplan.context.BonusContext;
 import com.winplan.context.SystemContext;
 import com.winplan.entity.BonusHistory;
+import com.winplan.entity.ConsumeRecord;
 import com.winplan.entity.User;
 import com.winplan.enums.BonusTypeEnum;
 import com.winplan.service.BonusService;
+import com.winplan.service.ConsumeRecordService;
 import com.winplan.service.UserService;
 import com.winplan.utils.CollectionUtils;
 import com.winplan.utils.SecurityUtil;
@@ -56,6 +58,9 @@ public class UserServiceImpl extends DataServiceImpl<User> implements UserServic
 	
 	@Autowired
 	private BonusService bonusService;
+	
+	@Autowired
+	private ConsumeRecordService consumeRecordService;
 	
 	public User findByAccount(String account) {
 		return findOne(Query.query(Criteria.where("account").is(account)));
@@ -111,6 +116,16 @@ public class UserServiceImpl extends DataServiceImpl<User> implements UserServic
 //		giveTj(user);
 		//层奖
 		giveCen(user);
+		addConsumeRecord(user);
+	}
+	
+	private void addConsumeRecord(User user){
+		ConsumeRecord record = new ConsumeRecord();
+		record.setAccount(user.getAccount());
+		record.setAmount(new BigDecimal(SystemContext.getBonusPerRegisterUser()).setScale(2, RoundingMode.HALF_UP));
+		record.setPeriodNumber(60);
+		record.setDescription("注册资金");
+		consumeRecordService.add(record);
 	}
 	
 	private void recalUserCount(User user){

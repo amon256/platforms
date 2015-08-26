@@ -133,7 +133,7 @@ html,body {
 						</div>
 						<div class="form-group form-actions">
 							<div class="col-xs-4 col-xs-offset-4 ">
-								<button type="submit" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-off"></span> 登录</button>
+								<button type="submit" class="btn btn-sm btn-info">登录</button>
 							</div>
 						</div>
 						<!-- <div class="form-group">
