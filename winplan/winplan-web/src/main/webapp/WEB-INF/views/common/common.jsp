@@ -21,4 +21,4 @@ request.setAttribute("ctx", ctx);
 <script type="text/javascript">
 	var ctx = '${ctx }';
 </script>
-<title>JK Group Manager Controller</title>
+<title>JK Group</title>
