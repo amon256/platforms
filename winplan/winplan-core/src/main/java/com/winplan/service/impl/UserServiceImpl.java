@@ -38,6 +38,7 @@ import com.winplan.entity.BonusHistory;
 import com.winplan.entity.ConsumeRecord;
 import com.winplan.entity.User;
 import com.winplan.enums.BonusTypeEnum;
+import com.winplan.enums.ConsumeTypeEnum;
 import com.winplan.service.BonusService;
 import com.winplan.service.ConsumeRecordService;
 import com.winplan.service.UserService;
@@ -124,6 +125,7 @@ public class UserServiceImpl extends DataServiceImpl<User> implements UserServic
 		record.setAccount(user.getAccount());
 		record.setAmount(new BigDecimal(SystemContext.getBonusPerRegisterUser()).setScale(2, RoundingMode.HALF_UP));
 		record.setPeriodNumber(60);
+		record.setType(ConsumeTypeEnum.REG);
 		record.setDescription("注册资金");
 		consumeRecordService.add(record);
 	}

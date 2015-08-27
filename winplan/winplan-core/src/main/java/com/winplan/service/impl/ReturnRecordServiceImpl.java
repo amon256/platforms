@@ -33,6 +33,7 @@ import com.winplan.entity.ReturnRecord;
 import com.winplan.entity.User;
 import com.winplan.enums.BonusTypeEnum;
 import com.winplan.service.BonusService;
+import com.winplan.service.ConsumeRecordService;
 import com.winplan.service.ReturnRecordService;
 import com.winplan.service.UserService;
 import com.winplan.utils.CollectionUtils;
@@ -52,6 +53,9 @@ public class ReturnRecordServiceImpl extends CoreServiceImpl<ReturnRecord> imple
 	
 	@Autowired
 	private BonusService bonusService;
+	
+	@Autowired
+	private ConsumeRecordService consumeRecordService;
 	
 	@Override
 	public List<ReturnRecord> findByConsumeRecordId(String id) {
@@ -98,10 +102,15 @@ public class ReturnRecordServiceImpl extends CoreServiceImpl<ReturnRecord> imple
 		his.setSurplus(user.getBonus());
 		his.setTotalBonus(user.getTotalBonus());
 		bonusService.add(his);
-		
+		//返还记录标记己完成
 		record.setComplete(true);
 		record.setReturnTime(new Date());
 		this.update(record, CollectionUtils.createSet(String.class, "complete","returnTime"));
+		//消费记录更新己返还次数，己返金额
+		consumeRecordService.update(
+				Query.query(Criteria.where("_id").is(record.getConsumeRecord().getId())), 
+				Update.update("lastUpdateTime", new Date()).inc("returned", 1).inc("returnedAmount", record.getAmount().floatValue())
+		);
 	}
 
 }

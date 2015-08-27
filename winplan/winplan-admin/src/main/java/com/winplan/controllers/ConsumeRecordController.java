@@ -30,6 +30,7 @@ import com.winplan.annotations.TokenCreate;
 import com.winplan.annotations.TokenValidate;
 import com.winplan.entity.ConsumeRecord;
 import com.winplan.entity.ReturnRecord;
+import com.winplan.enums.ConsumeTypeEnum;
 import com.winplan.service.ConsumeRecordService;
 import com.winplan.service.ReturnRecordService;
 import com.winplan.service.UserService;
@@ -117,6 +118,7 @@ public class ConsumeRecordController extends BaseController {
 			model.put(MSG, "消费金额非法");
 		}else{
 			record.setAmount(record.getAmount().setScale(2, RoundingMode.HALF_DOWN));
+			record.setType(ConsumeTypeEnum.CONS);
 			consumeRecordService.add(record);
 			return list(new Pagination(), record, model);
 		}

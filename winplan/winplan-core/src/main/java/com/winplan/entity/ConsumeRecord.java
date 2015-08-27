@@ -11,6 +11,8 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.winplan.enums.ConsumeTypeEnum;
+
 /**  
  * 功能描述：消费记录
  * 
@@ -33,6 +35,11 @@ public class ConsumeRecord extends DataEntity {
 	private BigDecimal amount; 
 	
 	/**
+	 * 消费类型
+	 */
+	private ConsumeTypeEnum type;
+	
+	/**
 	 * 返还期数
 	 */
 	private int periodNumber;
@@ -45,13 +52,11 @@ public class ConsumeRecord extends DataEntity {
 	/**
 	 * 己返还期数
 	 */
-	@Transient
 	private int returned;
 	
 	/**
 	 * 己返金额
 	 */
-	@Transient
 	private BigDecimal returnedAmount;
 	
 	/**
@@ -114,5 +119,13 @@ public class ConsumeRecord extends DataEntity {
 
 	public void setReturnedAmount(BigDecimal returnedAmount) {
 		this.returnedAmount = returnedAmount;
+	}
+
+	public ConsumeTypeEnum getType() {
+		return type;
+	}
+
+	public void setType(ConsumeTypeEnum type) {
+		this.type = type;
 	}
 }

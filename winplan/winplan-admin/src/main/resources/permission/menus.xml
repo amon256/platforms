@@ -35,8 +35,18 @@
 		<page id="P0403" name="消费保存">/consume/add</page>
 		<page id="P0404" name="返现明细">/consume/detail</page>
 	</menu>
-	<menu id="M0005" name="奖金管理" page="">
-	</menu>
-	<menu id="M0006" name="报表查询" page="">
+	<group id="G0005" name="奖金管理">
+		<menu id="M0005" name="分红策略" page="P0501">
+			<page id="P0501" name="策略列表">/dividendstrategy/list</page>
+			<page id="P0502" name="策略新增">/dividendstrategy/toAdd</page>
+			<page id="P0503" name="策略新增">/dividendstrategy/add</page>
+			<page id="P0504" name="策略修改">/dividendstrategy/toUpdate</page>
+			<page id="P0505" name="策略修改">/dividendstrategy/update</page>
+			<page id="P0506" name="策略查看">/dividendstrategy/detail</page>
+		</menu>
+		<menu id="M0006" name="奖金增发">
+		</menu>
+	</group>
+	<menu id="M0007" name="报表查询" page="">
 	</menu>
 </menus>
