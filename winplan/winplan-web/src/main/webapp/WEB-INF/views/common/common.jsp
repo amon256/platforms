@@ -12,9 +12,9 @@ request.setAttribute("ctx", ctx);
 <link href="${ctx }/adminLTE/css/AdminLTE.min.css" rel="stylesheet">
 <link href="${ctx }/adminLTE/css/skins/skin-blue.min.css" rel="stylesheet">
 <!-- Font Awesome -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="${ctx }/adminLTE/css/font-awesome.min.css">
 <!-- Ionicons -->
-<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+<link rel="stylesheet" href="${ctx }/adminLTE/css/ionicons.min.css">
 <script type="text/javascript" src="${ctx }/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="${ctx }/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${ctx }/adminLTE/js/app.min.js"></script>
