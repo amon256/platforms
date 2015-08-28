@@ -25,5 +25,3 @@
 			<button type="submit" class="btn btn-primary">申请</button>
 		</form>
 	</div>
-</body>
-</html>

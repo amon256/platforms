@@ -92,5 +92,3 @@
 			<button type="submit" class="btn btn-primary">修改个人资料</button>
 		</form>
 	</div>
-</body>
-</html>

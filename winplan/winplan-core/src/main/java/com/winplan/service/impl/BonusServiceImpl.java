@@ -39,6 +39,10 @@ public class BonusServiceImpl extends DataServiceImpl<BonusHistory> implements B
 	
 	@Override
 	public void addBonus(String userId, float amount,float taxRate, BonusTypeEnum type, boolean incTotalBonus,String description) {
+		addBonus(userId, amount, taxRate, type, incTotalBonus, description, null);
+	}
+	
+	private void addBonus(String userId, float amount,float taxRate, BonusTypeEnum type, boolean incTotalBonus,String description,String otherAccount) {
 		if(amount == 0.00f){
 			logger.debug("金额为零，不处理");
 			return;
@@ -56,6 +60,7 @@ public class BonusServiceImpl extends DataServiceImpl<BonusHistory> implements B
 			his.setDesc(description);
 			his.setBonus(BigDecimal.valueOf(amount).setScale(2, RoundingMode.HALF_UP));
 			his.setAccount(user.getAccount());
+			his.setOtherAccount(otherAccount);
 			his.setSurplus(user.getBonus());
 			his.setTotalBonus(user.getTotalBonus());
 			his.setType(type);
@@ -67,8 +72,8 @@ public class BonusServiceImpl extends DataServiceImpl<BonusHistory> implements B
 	
 	@Override
 	public void transfer(User from, User to, BigDecimal bonus, String desc) {
-		addBonus(from.getId(), BigDecimal.ZERO.subtract(bonus).setScale(2, RoundingMode.HALF_UP).floatValue(),1.0f, BonusTypeEnum.TRANSFER_OUT, false, "奖金转出");
-		addBonus(to.getId(),  bonus.setScale(2, RoundingMode.HALF_UP).floatValue(),1.0f, BonusTypeEnum.TRANSFER_IN, false, "奖金转入");
+		addBonus(from.getId(), BigDecimal.ZERO.subtract(bonus).setScale(2, RoundingMode.HALF_UP).floatValue(),1.0f, BonusTypeEnum.TRANSFER_OUT, false, "奖金转出",to.getAccount());
+		addBonus(to.getId(),  bonus.setScale(2, RoundingMode.HALF_UP).floatValue(),1.0f, BonusTypeEnum.TRANSFER_IN, false, "奖金转入",from.getAccount());
 	}
 
 }

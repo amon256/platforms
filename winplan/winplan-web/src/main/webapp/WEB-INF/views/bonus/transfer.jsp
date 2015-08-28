@@ -38,5 +38,3 @@
 			<button type="submit" class="btn btn-primary">确定转出</button>
 		</form>
 	</div>
-</body>
-</html>

@@ -22,6 +22,7 @@
 		</menu>
 		<menu id="M0002" name="用户管理" page="P0201">
 			<page id="P0201" name="用户列表">/user/list</page>
+			<page id="P0202" name="用户信息">/user/detail</page>
 		</menu>
 	</group>
 	<menu id="M0003" name="提现管理" page="P0301">
@@ -43,6 +44,7 @@
 			<page id="P0504" name="策略修改">/dividendstrategy/toUpdate</page>
 			<page id="P0505" name="策略修改">/dividendstrategy/update</page>
 			<page id="P0506" name="策略查看">/dividendstrategy/detail</page>
+			<page id="P0507" name="分红明细">/dividendrecord/list</page>
 		</menu>
 		<menu id="M0006" name="奖金增发">
 		</menu>

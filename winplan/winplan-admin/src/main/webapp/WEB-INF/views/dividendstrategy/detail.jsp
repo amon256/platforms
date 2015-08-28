@@ -30,15 +30,41 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="date" class="col-sm-2 control-label">发放日期</label>
+				<label for="reality" class="col-sm-2 control-label">实际金额：</label>
+				<div class="col-sm-6">
+					<p class="form-control-static"><fmt:formatNumber value="${data.reality }" pattern="0.00"/></p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="percapita" class="col-sm-2 control-label">人均金额：</label>
+				<div class="col-sm-6">
+					<p class="form-control-static"><fmt:formatNumber value="${data.percapita }" pattern="0.00"/></p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="date" class="col-sm-2 control-label">计划日期：</label>
 				<div class="col-sm-6">
 					<p class="form-control-static"><fmt:formatDate value="${data.date }" pattern="yyyy-MM-dd"/></p>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-2 control-label">发放范围策略</label>
+				<label for="giveTime" class="col-sm-2 control-label">实际日期：</label>
 				<div class="col-sm-6">
-					<a tag="add" href="javascript:void(0);" onclick="addRow()"><i class="fa fa-fw fa-plus-square"></i></a>
+					<p class="form-control-static"><fmt:formatDate value="${data.giveTime }" pattern="yyyy-MM-dd"/></p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="result" class="col-sm-2 control-label">结果：</label>
+				<div class="col-sm-6">
+					<p class="form-control-static">${data.result }</p>
+					<c:if test="${data.complete == true }">
+						<a href="${ctx }/${cus:url(activeMenu.id,'/dividendrecord/list') }&strategy=${data.id}">查看发放明细</a>
+					</c:if>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">发放范围策略：</label>
+				<div class="col-sm-6">
 					<table id="stratergyTable">
 						<tbody>
 							<c:choose>
