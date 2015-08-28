@@ -26,7 +26,7 @@ public class SystemContext {
 	 * @return
 	 */
 	public static String getAccountPrefix(){
-		return "QZ";
+		return "";
 	}
 	
 	/**

@@ -46,9 +46,14 @@
 			<page id="P0506" name="策略查看">/dividendstrategy/detail</page>
 			<page id="P0507" name="分红明细">/dividendrecord/list</page>
 		</menu>
-		<menu id="M0006" name="奖金增发">
+		<menu id="M0006" name="奖金增发" page="P0601">
+			<page id="P0601" name="发放列表">/bonuspayment/list</page>
+			<page id="P0602" name="新增">/bonuspayment/toAdd</page>
+			<page id="P0603" name="新增">/bonuspayment/add</page>
+			<page id="P0604" name="确认">/bonuspayment/submit</page>
 		</menu>
 	</group>
-	<menu id="M0007" name="报表查询" page="">
+	<menu id="M0007" name="报表查询" page="P0701">
+		<page id="P0701" name="报表"></page>
 	</menu>
 </menus>
