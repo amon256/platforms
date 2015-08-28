@@ -18,7 +18,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.mongodb.core.DocumentCallbackHandler;
-import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.convert.MongoConverter;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -28,7 +27,6 @@ import org.springframework.stereotype.Component;
 
 import com.mongodb.DBObject;
 import com.mongodb.MongoException;
-import com.winplan.entity.BonusHistory;
 import com.winplan.entity.ReturnRecord;
 import com.winplan.entity.User;
 import com.winplan.enums.BonusTypeEnum;
@@ -82,26 +80,11 @@ public class ReturnRecordServiceImpl extends CoreServiceImpl<ReturnRecord> imple
 	}
 	
 	private void executeReturnRecord(ReturnRecord record){
-		
-		FindAndModifyOptions options = new FindAndModifyOptions();
-		options.returnNew(true);
-		//源账号增加bonus
-		User user = getMongoTemplate().findAndModify(
-				Query.query(Criteria.where("account").is(record.getConsumeRecord().getAccount())), 
-				Update.update("lastUpdateTime", new Date())
-					.inc("bonus", record.getAmount().setScale(2, RoundingMode.HALF_UP).doubleValue())
-					.inc("totalBonus", record.getAmount().setScale(2, RoundingMode.HALF_UP).doubleValue()),
-				options, 
-				User.class);
-		//奖金记录
-		BonusHistory his = new BonusHistory();
-		his.setBonus(record.getAmount());
-		his.setAccount(record.getConsumeRecord().getAccount());
-		his.setDesc("返现");
-		his.setType(BonusTypeEnum.ADD);
-		his.setSurplus(user.getBonus());
-		his.setTotalBonus(user.getTotalBonus());
-		bonusService.add(his);
+		User user = userService.findByAccount(record.getConsumeRecord().getAccount());
+		if(user == null){
+			return;
+		}
+		bonusService.addBonus(user.getId(), record.getAmount().setScale(2, RoundingMode.HALF_UP).floatValue(), 1.00f, BonusTypeEnum.ADD, true, "返现");
 		//返还记录标记己完成
 		record.setComplete(true);
 		record.setReturnTime(new Date());

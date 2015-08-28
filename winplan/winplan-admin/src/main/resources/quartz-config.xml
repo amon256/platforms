@@ -10,6 +10,7 @@
 	default-lazy-init="false ">
 	
 	<!-- 定义job -->
+	<!-- 返现job -->
     <bean id="returnRecordJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
 		<property name="jobClass" value="com.winplan.jobs.ReturnRecordExecuteJob" />
 		<property name="durability" value="true" />
@@ -18,14 +19,25 @@
         <property name="jobDetail" ref="returnRecordJobDetail"></property>
         <property name="cronExpression" value="30 0 2 * * ?"></property>
     </bean>
+    <!-- 分红job -->
+    <bean id="dividendStrategyExecuteJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass" value="com.winplan.jobs.DividendStrategyExecuteJob" />
+		<property name="durability" value="true" />
+	</bean>
+    <bean id="dividendStrategyExecuteCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="dividendStrategyExecuteJobDetail"></property>
+        <property name="cronExpression" value="30 0 3 * * ?"></property>
+    </bean>
     
     
 
     <!-- ======================== 调度工厂 ======================== -->
     <bean id="SpringJobSchedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+    	<property name="waitForJobsToCompleteOnShutdown" value="true"/>
         <property name="triggers">
             <list>
                 <ref bean="returnRecordCronTrigger"/>
+                <ref bean="dividendStrategyExecuteCronTrigger"/>
             </list>
         </property>
     </bean>  

@@ -17,11 +17,11 @@ public class BonusContext {
 	 * @param newLevel
 	 * @return
 	 */
-	public static double getCenBonus(int level,int newLevel){
+	public static float getCenBonus(int level,int newLevel){
 		return ((newLevel - level > 1) ? 500 : 300);
 	}
 	
-	public static double getTaxRate(){
-		return 0.9;
+	public static float getTaxRate(){
+		return 0.9f;
 	}
 }

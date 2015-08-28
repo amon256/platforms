@@ -6,6 +6,7 @@
 package com.winplan.controllers;
 
 import java.math.BigDecimal;
+import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -153,7 +154,7 @@ public class UserController extends BaseController {
 		User existsUser = WebContext.getLoginUser();
 		existsUser = userService.findById(existsUser.getId());
 		if(existsUser.getBonus() == null || existsUser.getBonus().compareTo(BigDecimal.valueOf(SystemContext.getBonusPerRegisterUser())) < 0){
-			model.put("msg", "您的奖金未满1180元.");
+			model.put("msg", MessageFormat.format("您的奖金未满{0}元.", SystemContext.getBonusPerRegisterUser()));
 		}
 		User user = new User();
 		if(parentAccount != null){

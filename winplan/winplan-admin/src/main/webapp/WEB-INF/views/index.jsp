@@ -237,7 +237,7 @@
 		<!-- Main Footer -->
 		<footer class="main-footer">
 			<!-- Default to the left -->
-			<strong>Copyright &copy; 2015 <a href="#">JK Group</a>.</strong> All rights reserved.
+			<strong>Copyright &copy; since 2015 <a href="#">JK Group</a>.</strong> All rights reserved.
 		</footer>
 	</div>
 	<!-- ./wrapper -->

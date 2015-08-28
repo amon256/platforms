@@ -9,7 +9,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.MessageFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -34,7 +33,6 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.winplan.context.BonusContext;
 import com.winplan.context.SystemContext;
-import com.winplan.entity.BonusHistory;
 import com.winplan.entity.ConsumeRecord;
 import com.winplan.entity.User;
 import com.winplan.enums.BonusTypeEnum;
@@ -95,23 +93,10 @@ public class UserServiceImpl extends DataServiceImpl<User> implements UserServic
 		//重算左右区域人数
 		recalUserCount(user);
 		//扣注册奖金
-		FindAndModifyOptions options = new FindAndModifyOptions();
-		options.returnNew(true);
-		//源账号扣除bonus
-		loginUser = getMongoTemplate().findAndModify(
-				Query.query(Criteria.where("_id").is(loginUser.getId())), 
-				Update.update("lastUpdateTime", new Date()).inc("bonus", BigDecimal.ZERO.subtract(BigDecimal.valueOf(SystemContext.getBonusPerRegisterUser())).setScale(2, RoundingMode.HALF_UP).doubleValue()),
-				options, 
-				User.class);
-		logger.debug("扣除账号{}奖金{}",loginUser.getAccount(),SystemContext.getBonusPerRegisterUser());
-		//扣奖金记录
-		BonusHistory his = new BonusHistory();
-		his.setAccount(loginUser.getAccount());
-		his.setBonus(BigDecimal.valueOf(SystemContext.getBonusPerRegisterUser()));
-		his.setDesc(MessageFormat.format("注册{0}，扣除{1}元",account,his.getBonus()));
-		his.setSurplus(loginUser.getBonus());
-		his.setType(BonusTypeEnum.BONUS_KOU);
-		bonusService.add(his);
+		bonusService.addBonus(loginUser.getId(), 
+				BigDecimal.ZERO.subtract(BigDecimal.valueOf(SystemContext.getBonusPerRegisterUser())).setScale(2, RoundingMode.HALF_UP).floatValue(), 
+				1.0f,
+				BonusTypeEnum.BONUS_KOU, false, MessageFormat.format("注册{0}，扣除{1}元",user.getAccount(),SystemContext.getBonusPerRegisterUser()));
 		//发奖金
 		//推荐奖
 //		giveTj(user);
@@ -156,8 +141,6 @@ public class UserServiceImpl extends DataServiceImpl<User> implements UserServic
 	}
 	
 	private void giveCen(User user){
-		FindAndModifyOptions options = new FindAndModifyOptions();
-		options.returnNew(true);
 		Set<String> paths = new HashSet<String>();
 		String path = user.getPath();
 		while(path.length() > 1){
@@ -169,7 +152,6 @@ public class UserServiceImpl extends DataServiceImpl<User> implements UserServic
 			Query query = Query.query(Criteria.where("path").in(paths)).with(new Sort(Direction.DESC, "path"));
 			parentUsers = this.findList(query);
 		}
-		BonusHistory his = null;
 		if(parentUsers != null){
 			for(User pu : parentUsers){
 				Query query = Query.query(Criteria.where("path").regex("^" + pu.getPath() + "0").and("level").is(user.getLevel()));
@@ -179,25 +161,9 @@ public class UserServiceImpl extends DataServiceImpl<User> implements UserServic
 				if(leftCount > 0 && rightCount > 0 && ((leftCount == 1 && user.getPath().startsWith(pu.getPath() + "0")) || (rightCount == 1 && user.getPath().startsWith(pu.getPath() + "1")))){
 					//左右都有，并且第一次成层
 					//按层级计算奖金
-					double bonus = BonusContext.getCenBonus(pu.getLevel(), user.getLevel());
+					float bonus = BonusContext.getCenBonus(pu.getLevel(), user.getLevel());
 					//增加奖金
-					pu = getMongoTemplate().findAndModify(
-							Query.query(Criteria.where("_id").is(pu.getId())), 
-							Update.update("lastUpdateTime", new Date()).inc("bonus", bonus*BonusContext.getTaxRate()).inc("totalBonus", bonus),
-							options, 
-							User.class);
-					if(pu != null){
-						logger.debug("{}发{}层奖(left:{},right:{})",pu.getAccount(),bonus,leftCount,rightCount);
-						//记录奖金历史
-						his = new BonusHistory();
-						his.setBonus(BigDecimal.valueOf(bonus*BonusContext.getTaxRate()));
-						his.setAccount(pu.getAccount());
-						his.setSurplus(pu.getBonus());
-						his.setTotalBonus(pu.getTotalBonus());
-						his.setType(BonusTypeEnum.BONUS_CEN);
-						his.setDesc(MessageFormat.format("层奖{0}元", bonus));
-						bonusService.add(his);
-					}
+					bonusService.addBonus(pu.getId(), bonus,BonusContext.getTaxRate(), BonusTypeEnum.BONUS_CEN, true, MessageFormat.format("层奖{0}元", bonus));
 				}
 			}
 		}

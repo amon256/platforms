@@ -9,6 +9,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -30,43 +32,43 @@ import com.winplan.service.UserService;
  */
 @Component
 public class BonusServiceImpl extends DataServiceImpl<BonusHistory> implements BonusService {
-
+	private static final Logger logger = LoggerFactory.getLogger(BonusServiceImpl.class);
+			
 	@Autowired
 	private UserService userService;
 	
 	@Override
-	public void transfer(User from, User to, BigDecimal bonus, String desc) {
+	public void addBonus(String userId, float amount,float taxRate, BonusTypeEnum type, boolean incTotalBonus,String description) {
+		if(amount == 0.00f){
+			logger.debug("金额为零，不处理");
+			return;
+		}
 		FindAndModifyOptions options = new FindAndModifyOptions();
 		options.returnNew(true);
-		//源账号扣除bonus
-		from = getMongoTemplate().findAndModify(
-				Query.query(Criteria.where("_id").is(from.getId())), 
-				Update.update("lastUpdateTime", new Date()).inc("bonus", BigDecimal.ZERO.subtract(bonus).setScale(2, RoundingMode.HALF_UP).doubleValue()),
-				options, 
-				User.class);
-		//目标账号增加bonus,转让奖金不累计到总奖金
-		to = getMongoTemplate().findAndModify(
-				Query.query(Criteria.where("_id").is(to.getId())), 
-				Update.update("lastUpdateTime", new Date()).inc("bonus", bonus.setScale(2, RoundingMode.HALF_UP).doubleValue()), 
-				options,
-				User.class);
-		//增加转账记录
-		BonusHistory his = new BonusHistory();
-		his.setDesc(desc);
-		his.setBonus(bonus);
-		his.setAccount(from.getAccount());
-		his.setOtherAccount(to.getAccount());
-		his.setSurplus(from.getBonus());
-		his.setTotalBonus(from.getTotalBonus());
-		his.setType(BonusTypeEnum.TRANSFER_OUT);
-		this.add(his);//转出方记录
-		his.setAccount(to.getAccount());
-		his.setOtherAccount(from.getAccount());
-		his.setSurplus(to.getBonus());
-		his.setTotalBonus(to.getTotalBonus());
-		his.setType(BonusTypeEnum.TRANSFER_IN);
-		his.setId(null);
-		this.add(his);//转入方记录
+		Query query = Query.query(Criteria.where("_id").is(userId));
+		Update update = Update.update("lastUpdateTime", new Date()).inc("bonus",(amount * taxRate));
+		if(amount > 0 && incTotalBonus){
+			update.inc("totalBonus", amount);
+		}
+		User user = getMongoTemplate().findAndModify(query, update, options, User.class);
+		if(user != null){
+			BonusHistory his = new BonusHistory();
+			his.setDesc(description);
+			his.setBonus(BigDecimal.valueOf(amount).setScale(2, RoundingMode.HALF_UP));
+			his.setAccount(user.getAccount());
+			his.setSurplus(user.getBonus());
+			his.setTotalBonus(user.getTotalBonus());
+			his.setType(type);
+			this.add(his);
+		}else{
+			logger.debug("用户不存在");
+		}
+	}
+	
+	@Override
+	public void transfer(User from, User to, BigDecimal bonus, String desc) {
+		addBonus(from.getId(), BigDecimal.ZERO.subtract(bonus).setScale(2, RoundingMode.HALF_UP).floatValue(),1.0f, BonusTypeEnum.TRANSFER_OUT, false, "奖金转出");
+		addBonus(to.getId(),  bonus.setScale(2, RoundingMode.HALF_UP).floatValue(),1.0f, BonusTypeEnum.TRANSFER_IN, false, "奖金转入");
 	}
 
 }

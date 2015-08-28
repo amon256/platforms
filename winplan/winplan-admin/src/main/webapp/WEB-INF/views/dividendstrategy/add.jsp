@@ -97,8 +97,6 @@
 													<option value="$gte" <c:if test="${d.operation == '$gte' }">selected="selected"</c:if>>大于等于</option>
 													<option value="$lt" <c:if test="${d.operation == '$lt' }">selected="selected"</c:if>>小于</option>
 													<option value="$lte" <c:if test="${d.operation == '$lte' }">selected="selected"</c:if>>小于等于</option>
-													<option value="$in" <c:if test="${d.operation == '$in' }">selected="selected"</c:if>>包含</option>
-													<option value="$nin" <c:if test="${d.operation == '$nin' }">selected="selected"</c:if>>不包含</option>
 												</select>
 											</td>
 											<td>
@@ -125,8 +123,6 @@
 												<option value="$gte">大于等于</option>
 												<option value="$lt">小于</option>
 												<option value="$lte">小于等于</option>
-												<option value="$in">包含</option>
-												<option value="$nin">不包含</option>
 											</select>
 										</td>
 										<td>
@@ -166,8 +162,6 @@
 							<option value="$gte">大于等于</option>
 							<option value="$lt">小于</option>
 							<option value="$lte">小于等于</option>
-							<option value="$in">包含</option>
-							<option value="$nin">不包含</option>
 						</select>
 					</td>
 					<td>

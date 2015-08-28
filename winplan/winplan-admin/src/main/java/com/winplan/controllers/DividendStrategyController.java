@@ -64,6 +64,7 @@ public class DividendStrategyController extends BaseController {
 	public String add(DividendStrategy entity,ModelMap model){
 		validateBeforeSave(entity, model);
 		if(!model.containsKey(MSG)){
+			entity.setComplete(false);
 			dividendStrategyService.add(entity);
 			model.put(SUCC, "新增保存成功");
 			return list(new Pagination(), model);
