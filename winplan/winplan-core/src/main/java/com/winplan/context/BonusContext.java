@@ -8,7 +8,15 @@ public class BonusContext {
 	 * @return
 	 */
 	public static int getRecommendBonus(){
-		return 50;
+		return 120;
+	}
+	
+	/**
+	 * 注册奖，分给登录注册人员
+	 * @return
+	 */
+	public static float getRegisterBonus(){
+		return 18f;
 	}
 	
 	/**
@@ -18,7 +26,7 @@ public class BonusContext {
 	 * @return
 	 */
 	public static float getCenBonus(int level,int newLevel){
-		return ((newLevel - level > 1) ? 500 : 300);
+		return 120f;
 	}
 	
 	public static float getTaxRate(){

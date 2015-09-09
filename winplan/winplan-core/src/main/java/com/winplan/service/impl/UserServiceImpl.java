@@ -33,10 +33,8 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.winplan.context.BonusContext;
 import com.winplan.context.SystemContext;
-import com.winplan.entity.ConsumeRecord;
 import com.winplan.entity.User;
 import com.winplan.enums.BonusTypeEnum;
-import com.winplan.enums.ConsumeTypeEnum;
 import com.winplan.service.BonusService;
 import com.winplan.service.ConsumeRecordService;
 import com.winplan.service.UserService;
@@ -99,21 +97,35 @@ public class UserServiceImpl extends DataServiceImpl<User> implements UserServic
 				BonusTypeEnum.BONUS_KOU, false, MessageFormat.format("注册{0}，扣除{1}元",user.getAccount(),SystemContext.getBonusPerRegisterUser()));
 		//发奖金
 		//推荐奖
-//		giveTj(user);
+		giveTj(user);
 		//层奖
 		giveCen(user);
-		addConsumeRecord(user);
+		addRegisterBonus(loginUser, user);
+//		addConsumeRecord(user);
 	}
 	
-	private void addConsumeRecord(User user){
-		ConsumeRecord record = new ConsumeRecord();
-		record.setAccount(user.getAccount());
-		record.setAmount(new BigDecimal(SystemContext.getBonusPerRegisterUser()).setScale(2, RoundingMode.HALF_UP));
-		record.setPeriodNumber(60);
-		record.setType(ConsumeTypeEnum.REG);
-		record.setDescription("注册资金");
-		consumeRecordService.add(record);
+	/**
+	 * 增加报单奖
+	 * @param loginUser
+	 * @param user
+	 */
+	private void addRegisterBonus(User loginUser,User user){
+		bonusService.addBonus(loginUser.getId(), BonusContext.getRegisterBonus(), 1.0f, BonusTypeEnum.ADD, true, MessageFormat.format("报单奖({0})", user.getAccount()));
 	}
+	
+//	/**
+//	 * 增加返现记录
+//	 * @param user
+//	 */
+//	private void addConsumeRecord(User user){
+//		ConsumeRecord record = new ConsumeRecord();
+//		record.setAccount(user.getAccount());
+//		record.setAmount(new BigDecimal(SystemContext.getBonusPerRegisterUser()).setScale(2, RoundingMode.HALF_UP));
+//		record.setPeriodNumber(60);
+//		record.setType(ConsumeTypeEnum.REG);
+//		record.setDescription("注册资金");
+//		consumeRecordService.add(record);
+//	}
 	
 	private void recalUserCount(User user){
 		FindAndModifyOptions options = new FindAndModifyOptions();
@@ -169,33 +181,20 @@ public class UserServiceImpl extends DataServiceImpl<User> implements UserServic
 		}
 	}
 	
-//	/**
-//	 * 发推荐奖
-//	 * @param user
-//	 */
-//	private void giveTj(User user){
-//		FindAndModifyOptions options = new FindAndModifyOptions();
-//		options.returnNew(true);
-//		if(user.getRecommend() != null){
-//			int bonus = BonusContext.getRecommendBonus();
-//			User rec = getMongoTemplate().findAndModify(
-//						Query.query(Criteria.where("account").is(user.getRecommend())), 
-//						Update.update("lastUpdateTime", new Date()).inc("bonus", bonus).inc("totalBonus", bonus),
-//						options, 
-//						User.class);
-//			if(rec != null){
-//				logger.debug("{}推荐奖:{}",rec.getAccount(),bonus);
-//				BonusHistory his = new BonusHistory();
-//				his.setAccount(rec.getAccount());
-//				his.setBonus(BigDecimal.valueOf(bonus));
-//				his.setSurplus(rec.getBonus());
-//				his.setType(BonusTypeEnum.BONUS_TJ);
-//				his.setTotalBonus(rec.getTotalBonus());
-//				his.setDesc(MessageFormat.format("推荐{0}获推荐奖{1}",user.getAccount(),bonus));
-//				bonusService.add(his);
-//			}
-//		}
-//	}
+	/**
+	 * 发推荐奖
+	 * @param user
+	 */
+	private void giveTj(User user){
+		if(user.getRecommend() != null){
+			int bonus = BonusContext.getRecommendBonus();
+			User rec = findByAccount(user.getRecommend());
+			if(rec != null){
+				bonusService.addBonus(rec.getId(), bonus,1.0f, BonusTypeEnum.BONUS_TJ, true, MessageFormat.format("推荐{0}获推荐奖{1}",user.getAccount(),bonus));
+				logger.debug("{}推荐奖:{}",rec.getAccount(),bonus);
+			}
+		}
+	}
 	
 	@Override
 	public Map<String, Integer> groupRecommend(List<String> accounts) {
