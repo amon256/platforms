@@ -161,4 +161,11 @@ public abstract class CoreServiceImpl<T extends CoreEntity> implements CoreServi
 		String collectionName = getCurrentClass().getAnnotation(Document.class).collection();
 		return mongoTemplate.getCollection(collectionName ).group(keys, condition, initial, reduce, finalize);
 	}
+	
+	@SuppressWarnings("deprecation")
+	@Override
+	public DBObject group(DBObject args) {
+		String collectionName = getCurrentClass().getAnnotation(Document.class).collection();
+		return mongoTemplate.getCollection(collectionName ).group(args);
+	}
 }

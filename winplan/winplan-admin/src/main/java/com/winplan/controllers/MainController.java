@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class MainController extends BaseController {
 
-	@RequestMapping(value="main")
+	@RequestMapping(value="homepage")
 	public String main(){
-		return "main/main";
+		return "homepage";
 	}
 	
 }

@@ -8,6 +8,7 @@
 		<page id="P0004" name="保存配置">/adminuser/profile</page>
 		<page id="P0005" name="修改密码">/adminuser/toPassword</page>
 		<page id="P0006" name="保存密码">/adminuser/password</page>
+		<page id="P0007" name="注册报表">/bi/registerTrend</page>
 	</menu>
 	<group id="G0001" name="用户管理">
 		<menu id="M0001" name="管理员" page="P0101">
@@ -54,6 +55,6 @@
 		</menu>
 	</group>
 	<menu id="M0007" name="报表查询" page="P0701">
-		<page id="P0701" name="报表"></page>
+		<page id="P0701" name="注册报表">/bi/registerTrend</page>
 	</menu>
 </menus>

@@ -90,4 +90,15 @@ public interface CoreService<T extends CoreEntity> {
 	 */
 	public DBObject group(DBObject keys, DBObject condition, DBObject initial, String reduce, String finalize);
 	
+	/**
+	 * 分组查询
+	 * @param args   
+	 *  args.put( "key" , keys );//args.put( "keyf" , "function(doc){......return {key,value}}" );
+        args.put( "cond" , condition );
+        args.put( "$reduce" , reduce );
+        args.put( "initial" , initial );
+	 * @return
+	 */
+	public DBObject group(DBObject args);
+	
 }
