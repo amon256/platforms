@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="/custom/lib" prefix="cus" %>
+<div class="container-fluid">
 	<div class="editpanel">
 		<form role="form" class="form-horizontal" action="${ctx }/${cus:url(activeMenu.id,'/user/register')}" method="post">
 			<input type="hidden" name="__TOKEN__" value="${__TOKEN__ }"/>
@@ -57,3 +58,4 @@
 			<button type="submit" class="btn btn-primary">确定注册</button>
 		</form>
 	</div>
+</div>

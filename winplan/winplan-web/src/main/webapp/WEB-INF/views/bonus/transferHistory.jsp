@@ -53,5 +53,5 @@
 					</tr>
 				</tfoot>
 			</table>
-		<div class="editpanel">
+		</div>
 	</div>
