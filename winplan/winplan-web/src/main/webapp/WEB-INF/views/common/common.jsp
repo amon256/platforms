@@ -21,4 +21,43 @@ request.setAttribute("ctx", ctx);
 <script type="text/javascript">
 	var ctx = '${ctx }';
 </script>
+<style>
+	.editpanel{
+		margin-right: 0;
+		margin-left: 0;
+		background-color: #fff;
+		border-color: #ddd;
+		border-width: 1px;
+		border-radius: 4px;
+		position: relative;
+		padding: 15px 15px 15px;
+		margin: 0 -15px 15px;
+		border-style: solid;
+	}
+	.querypanel{
+		margin-right: 0;
+		margin-left: 0;
+		background-color: #fff;
+		border-color: #ddd;
+		border-width: 1px;
+		border-radius: 4px 4px 0 0;
+		position: relative;
+		padding: 15px 15px 15px;
+		margin: 0 -15px 15px;
+		border-style: solid;
+	}
+	.contentpanel{
+		margin-top: -16px;
+		margin-right: 0;
+		margin-left: 0;
+		border-width: 1px;
+		border-bottom-right-radius: 4px;
+		border-bottom-left-radius: 4px;
+		margin: -15px -15px 15px;
+		border-radius: 0;
+		padding: 9px 14px;
+		background-color: #fff;
+		border: 1px solid #e1e1e8;
+	}
+</style>
 <title>JK Group</title>

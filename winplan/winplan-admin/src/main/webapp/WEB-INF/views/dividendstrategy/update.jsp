@@ -43,114 +43,116 @@
 		}
 	</script>
 	<div class="container-fluid">
-		<form role="form" class="form-horizontal" action="${ctx }/${cus:url(activeMenu.id,'/dividendstrategy/update') }" method="post" onsubmit="return beforeSubmit()">
-			<input type="hidden" name="id" value="${data.id }">
-			<c:if test="${not empty msg }">
-				<div class="alert alert-warning alert-dismissible" role="alert">
-				  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				  	${msg }
+		<div class="editpanel">
+			<form role="form" class="form-horizontal" action="${ctx }/${cus:url(activeMenu.id,'/dividendstrategy/update') }" method="post" onsubmit="return beforeSubmit()">
+				<input type="hidden" name="id" value="${data.id }">
+				<c:if test="${not empty msg }">
+					<div class="alert alert-warning alert-dismissible" role="alert">
+					  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					  	${msg }
+					</div>
+				</c:if>
+				<c:if test="${not empty succ }">
+					<div class="alert alert-success alert-dismissible" role="alert">
+					  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					  	${succ }
+					</div>
+				</c:if>
+				<div class="form-group">
+					<label for="name" class="col-sm-2 control-label">名称：</label>
+					<div class="col-sm-6">
+						<input type="text" class="form-control" name="name" required="required" value="${data.name }" placeholder="名称"/>
+					</div>
 				</div>
-			</c:if>
-			<c:if test="${not empty succ }">
-				<div class="alert alert-success alert-dismissible" role="alert">
-				  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				  	${succ }
+				<div class="form-group">
+					<label for="expect" class="col-sm-2 control-label">发放金额：</label>
+					<div class="col-sm-6">
+						<input type="number" class="form-control" name="expect" required="required" min="0" value="<fmt:formatNumber value="${data.expect }" pattern="0.00"/>" placeholder="发放金额"/>
+					</div>
 				</div>
-			</c:if>
-			<div class="form-group">
-				<label for="name" class="col-sm-2 control-label">名称：</label>
-				<div class="col-sm-6">
-					<input type="text" class="form-control" name="name" required="required" value="${data.name }" placeholder="名称"/>
+				<div class="form-group">
+					<label for="date" class="col-sm-2 control-label">发放日期</label>
+					<div class="col-sm-6">
+						<input type="date" class="form-control" id="date" name="date" required="required" value="<fmt:formatDate value="${data.date }" pattern="yyyy-MM-dd"/>" placeholder="发放日期"/>
+					</div>
 				</div>
-			</div>
-			<div class="form-group">
-				<label for="expect" class="col-sm-2 control-label">发放金额：</label>
-				<div class="col-sm-6">
-					<input type="number" class="form-control" name="expect" required="required" min="0" value="<fmt:formatNumber value="${data.expect }" pattern="0.00"/>" placeholder="发放金额"/>
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="date" class="col-sm-2 control-label">发放日期</label>
-				<div class="col-sm-6">
-					<input type="date" class="form-control" id="date" name="date" required="required" value="<fmt:formatDate value="${data.date }" pattern="yyyy-MM-dd"/>" placeholder="发放日期"/>
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-2 control-label">发放范围策略</label>
-				<div class="col-sm-6">
-					<a tag="add" href="javascript:void(0);" onclick="addRow()"><i class="fa fa-fw fa-plus-square"></i></a>
-					<table id="stratergyTable">
-						<tbody>
-							<c:choose>
-								<c:when test="${not empty data.strategys }">
-									<c:forEach items="${data.strategys }" var="d">
+				<div class="form-group">
+					<label class="col-sm-2 control-label">发放范围策略</label>
+					<div class="col-sm-6">
+						<a tag="add" href="javascript:void(0);" onclick="addRow()"><i class="fa fa-fw fa-plus-square"></i></a>
+						<table id="stratergyTable">
+							<tbody>
+								<c:choose>
+									<c:when test="${not empty data.strategys }">
+										<c:forEach items="${data.strategys }" var="d">
+											<tr>
+												<td>
+													<select tag="fieldName" class="form-control" required="required">
+														<option value="account" <c:if test="${d.fieldName == 'account' }">selected="selected"</c:if>>账号</option>
+														<option value="createTime" <c:if test="${d.fieldName == 'createTime' }">selected="selected"</c:if>>注册日期</option>
+													</select>
+												</td>
+												<td>
+													<select class="form-control" required="required">
+														<option value="$eq" <c:if test="${d.operation == '$eq' }">selected="selected"</c:if>>等于</option>
+														<option value="$gt" <c:if test="${d.operation == '$gt' }">selected="selected"</c:if>>大于</option>
+														<option value="$gte" <c:if test="${d.operation == '$gte' }">selected="selected"</c:if>>大于等于</option>
+														<option value="$lt" <c:if test="${d.operation == '$lt' }">selected="selected"</c:if>>小于</option>
+														<option value="$lte" <c:if test="${d.operation == '$lte' }">selected="selected"</c:if>>小于等于</option>
+														<option value="$in" <c:if test="${d.operation == '$in' }">selected="selected"</c:if>>包含</option>
+														<option value="$nin" <c:if test="${d.operation == '$nin' }">selected="selected"</c:if>>不包含</option>
+													</select>
+												</td>
+												<td>
+													<input type="text" class="form-control" value="${d.value }" required="required">
+												</td>
+												<td>
+													<a tag="remove" href="javascript:void(0);" onclick="removeRow(this)"><p class="fa fa-fw fa-minus-circle"></p></a>
+												</td>
+											</tr>
+										</c:forEach>
+									</c:when>
+									<c:otherwise>
 										<tr>
 											<td>
 												<select tag="fieldName" class="form-control" required="required">
-													<option value="account" <c:if test="${d.fieldName == 'account' }">selected="selected"</c:if>>账号</option>
-													<option value="createTime" <c:if test="${d.fieldName == 'createTime' }">selected="selected"</c:if>>注册日期</option>
+													<option value="account">账号</option>
+													<option value="createTime">注册日期</option>
 												</select>
 											</td>
 											<td>
 												<select class="form-control" required="required">
-													<option value="$eq" <c:if test="${d.operation == '$eq' }">selected="selected"</c:if>>等于</option>
-													<option value="$gt" <c:if test="${d.operation == '$gt' }">selected="selected"</c:if>>大于</option>
-													<option value="$gte" <c:if test="${d.operation == '$gte' }">selected="selected"</c:if>>大于等于</option>
-													<option value="$lt" <c:if test="${d.operation == '$lt' }">selected="selected"</c:if>>小于</option>
-													<option value="$lte" <c:if test="${d.operation == '$lte' }">selected="selected"</c:if>>小于等于</option>
-													<option value="$in" <c:if test="${d.operation == '$in' }">selected="selected"</c:if>>包含</option>
-													<option value="$nin" <c:if test="${d.operation == '$nin' }">selected="selected"</c:if>>不包含</option>
+													<option value="eq">等于</option>
+													<option value="$gt">大于</option>
+													<option value="$gte">大于等于</option>
+													<option value="$lt">小于</option>
+													<option value="$lte">小于等于</option>
+													<option value="$in">包含</option>
+													<option value="$nin">不包含</option>
 												</select>
 											</td>
 											<td>
-												<input type="text" class="form-control" value="${d.value }" required="required">
+												<input type="text" class="form-control" name="" required="required">
 											</td>
 											<td>
 												<a tag="remove" href="javascript:void(0);" onclick="removeRow(this)"><p class="fa fa-fw fa-minus-circle"></p></a>
 											</td>
 										</tr>
-									</c:forEach>
-								</c:when>
-								<c:otherwise>
-									<tr>
-										<td>
-											<select tag="fieldName" class="form-control" required="required">
-												<option value="account">账号</option>
-												<option value="createTime">注册日期</option>
-											</select>
-										</td>
-										<td>
-											<select class="form-control" required="required">
-												<option value="eq">等于</option>
-												<option value="$gt">大于</option>
-												<option value="$gte">大于等于</option>
-												<option value="$lt">小于</option>
-												<option value="$lte">小于等于</option>
-												<option value="$in">包含</option>
-												<option value="$nin">不包含</option>
-											</select>
-										</td>
-										<td>
-											<input type="text" class="form-control" name="" required="required">
-										</td>
-										<td>
-											<a tag="remove" href="javascript:void(0);" onclick="removeRow(this)"><p class="fa fa-fw fa-minus-circle"></p></a>
-										</td>
-									</tr>
-								</c:otherwise>
-							</c:choose>
-						</tbody>
-					</table>
+									</c:otherwise>
+								</c:choose>
+							</tbody>
+						</table>
+					</div>
 				</div>
-			</div>
-			<div class="form-group">
-				<label for="description" class="col-sm-2 control-label">备注：</label>
-				<div class="col-sm-6">
-					<textarea class="form-control" rows="3" name="description">${data.description }</textarea>
+				<div class="form-group">
+					<label for="description" class="col-sm-2 control-label">备注：</label>
+					<div class="col-sm-6">
+						<textarea class="form-control" rows="3" name="description">${data.description }</textarea>
+					</div>
 				</div>
-			</div>
-			<button type="submit" class="btn btn-primary">保存</button>
-		</form>
+				<button type="submit" class="btn btn-primary">保存</button>
+			</form>
+		</div>
 		<div id="template" class="hidden">
 			<table>
 				<tr tag="tr">

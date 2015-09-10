@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="/custom/lib" prefix="cus" %>
 	<div class="container-fluid">
+		<div class="editpanel">
 		<form class="form-inline">
 		  <div class="form-group">
 		    <label>消费账号:</label>
@@ -59,5 +60,5 @@
 		 		<p>该消费无返现</p>
 		 	</c:otherwise>
 		 </c:choose>
-		
+		</div>
 	</div>

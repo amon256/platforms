@@ -33,5 +33,7 @@
 	});
 </script>
 	<div class="container-fluid">
-		<ul id="recommendTree" class="ztree"></ul>
+		<div class="editpanel">
+			<ul id="recommendTree" class="ztree"></ul>
+		</div>
 	</div>
