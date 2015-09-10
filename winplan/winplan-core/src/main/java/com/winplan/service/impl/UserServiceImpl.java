@@ -15,6 +15,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +42,7 @@ import com.winplan.service.ConsumeRecordService;
 import com.winplan.service.UserService;
 import com.winplan.utils.CollectionUtils;
 import com.winplan.utils.SecurityUtil;
+import com.winplan.utils.ThreadUtils;
 
 /**  
  * 功能描述：
@@ -141,18 +144,33 @@ public class UserServiceImpl extends DataServiceImpl<User> implements UserServic
 			Query query = Query.query(Criteria.where("path").in(paths)).with(new Sort(Direction.DESC, "path"));
 			parentUsers = this.findList(query);
 			if(parentUsers != null){
-				for(User pu : parentUsers){
-					query = Query.query(Criteria.where("path").regex("^" + pu.getPath() + "0").and("level").gt(pu.getLevel()));
-					long leftCount = this.count(query);
-					query = Query.query(Criteria.where("path").regex("^" + pu.getPath() + "1").and("level").gt(pu.getLevel()));
-					long rightCount = this.count(query);
-					this.update(Query.query(Criteria.where("_id").is(pu.getId())), Update.update("leftCount", leftCount).set("rightCount", rightCount));
+				//多线程并行计算
+				int threadSize = parentUsers.size();
+				ExecutorService executor = ThreadUtils.getPublicExecutorService();
+				final CountDownLatch latch = new CountDownLatch(threadSize);
+				for(final User pu : parentUsers){
+					executor.execute(new Thread(){
+						public void run() {
+							Query pathQuery = Query.query(Criteria.where("path").regex("^" + pu.getPath() + "0").and("level").gt(pu.getLevel()));
+							long leftCount = count(pathQuery);
+							pathQuery = Query.query(Criteria.where("path").regex("^" + pu.getPath() + "1").and("level").gt(pu.getLevel()));
+							long rightCount = count(pathQuery);
+							update(Query.query(Criteria.where("_id").is(pu.getId())), Update.update("leftCount", leftCount).set("rightCount", rightCount));
+							latch.countDown();
+							System.out.println("计算人数线程号:" + this.getId());
+						};
+					});
+				}
+				try {
+					latch.await();
+				} catch (InterruptedException e) {
+					logger.error("计算左右人数执行异常", e);
 				}
 			}
 		}
 	}
 	
-	private void giveCen(User user){
+	private void giveCen(final User user){
 		Set<String> paths = new HashSet<String>();
 		String path = user.getPath();
 		while(path.length() > 1){
@@ -165,18 +183,33 @@ public class UserServiceImpl extends DataServiceImpl<User> implements UserServic
 			parentUsers = this.findList(query);
 		}
 		if(parentUsers != null){
-			for(User pu : parentUsers){
-				Query query = Query.query(Criteria.where("path").regex("^" + pu.getPath() + "0").and("level").is(user.getLevel()));
-				long leftCount = this.count(query);
-				query = Query.query(Criteria.where("path").regex("^" + pu.getPath() + "1").and("level").is(user.getLevel()));
-				long rightCount = this.count(query);
-				if(leftCount > 0 && rightCount > 0 && ((leftCount == 1 && user.getPath().startsWith(pu.getPath() + "0")) || (rightCount == 1 && user.getPath().startsWith(pu.getPath() + "1")))){
-					//左右都有，并且第一次成层
-					//按层级计算奖金
-					float bonus = BonusContext.getCenBonus(pu.getLevel(), user.getLevel());
-					//增加奖金
-					bonusService.addBonus(pu.getId(), bonus,BonusContext.getTaxRate(), BonusTypeEnum.BONUS_CEN, true, MessageFormat.format("层奖{0}元", bonus));
-				}
+			int threadSize = parentUsers.size();
+			ExecutorService executor = ThreadUtils.getPublicExecutorService();
+			final CountDownLatch latch = new CountDownLatch(threadSize);
+			for(final User pu : parentUsers){
+				executor.execute(new Thread(){
+					@Override
+					public void run() {
+						Query query = Query.query(Criteria.where("path").regex("^" + pu.getPath() + "0").and("level").is(user.getLevel()));
+						long leftCount = count(query);
+						query = Query.query(Criteria.where("path").regex("^" + pu.getPath() + "1").and("level").is(user.getLevel()));
+						long rightCount = count(query);
+						if(leftCount > 0 && rightCount > 0 && ((leftCount == 1 && user.getPath().startsWith(pu.getPath() + "0")) || (rightCount == 1 && user.getPath().startsWith(pu.getPath() + "1")))){
+							//左右都有，并且第一次成层
+							//按层级计算奖金
+							float bonus = BonusContext.getCenBonus(pu.getLevel(), user.getLevel());
+							//增加奖金
+							bonusService.addBonus(pu.getId(), bonus,BonusContext.getTaxRate(), BonusTypeEnum.BONUS_CEN, true, MessageFormat.format("层奖{0}元", bonus));
+						}
+						latch.countDown();
+						System.out.println("计算层奖线程号:" + this.getId());
+					}
+				});
+			}
+			try {
+				latch.await();
+			} catch (InterruptedException e) {
+				logger.error("计算层次线程异常", e);
 			}
 		}
 	}
