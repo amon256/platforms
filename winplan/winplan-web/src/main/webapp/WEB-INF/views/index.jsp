@@ -27,13 +27,13 @@
 						<!-- Messages: style can be found in dropdown.less-->
 						<li class="dropdown messages-menu">
 							<!-- Menu toggle button --> 
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-envelope-o"></i> <span class="label label-success">4</span></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-envelope-o"></i> <span class="label label-success">0</span></a>
 							<ul class="dropdown-menu">
-								<li class="header">You have 4 messages</li>
+								<li class="header">You have 0 messages</li>
 								<li>
 									<!-- inner menu: contains the messages -->
 									<ul class="menu">
-										<li>
+										<%-- <li>
 											<!-- start message --> <a href="#">
 												<div class="pull-left">
 													<!-- User Image -->
@@ -46,12 +46,12 @@
 												<!-- The message -->
 												<p>Why not buy a new awesome theme?</p>
 										</a>
-										</li>
+										</li> --%>
 										<!-- end message -->
 									</ul>
 									<!-- /.menu -->
 								</li>
-								<li class="footer"><a href="#">See All Messages</a></li>
+								<li class="footer"><a href="javascript:void(0)">See All Messages</a></li>
 							</ul>
 						</li>
 						<!-- /.messages-menu -->
@@ -59,49 +59,49 @@
 						<!-- Notifications Menu -->
 						<li class="dropdown notifications-menu">
 							<!-- Menu toggle button --> 
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-bell-o"></i> <span class="label label-warning">10</span></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-bell-o"></i> <span class="label label-warning">0</span></a>
 							<ul class="dropdown-menu">
-								<li class="header">You have 10 notifications</li>
+								<li class="header">You have 0 notifications</li>
 								<li>
 									<!-- Inner Menu: contains the notifications -->
 									<ul class="menu">
-										<li>
-											<!-- start notification --> <a href="#"> <i class="fa fa-users text-aqua"></i> 5 new members joined today
+										<!-- <li>
+											start notification <a href="#"> <i class="fa fa-users text-aqua"></i> 5 new members joined today
 										</a>
-										</li>
+										</li> -->
 										<!-- end notification -->
 									</ul>
 								</li>
-								<li class="footer"><a href="#">View all</a></li>
+								<li class="footer"><a href="javascript:void(0)">View all</a></li>
 							</ul>
 						</li>
 						<!-- Tasks Menu -->
 						<li class="dropdown tasks-menu">
 							<!-- Menu Toggle Button --> 
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-flag-o"></i> <span class="label label-danger">9</span></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-flag-o"></i> <span class="label label-danger">0</span></a>
 							<ul class="dropdown-menu">
-								<li class="header">You have 9 tasks</li>
+								<li class="header">You have 0 tasks</li>
 								<li>
 									<!-- Inner menu: contains the tasks -->
 									<ul class="menu">
-										<li>
-											<!-- Task item --> <a href="#"> <!-- Task title and progress text -->
+										<!-- <li>
+											Task item <a href="#"> Task title and progress text
 												<h3>
 													Design some buttons <small class="pull-right">20%</small>
 												</h3> 
-												<!-- The progress bar -->
+												The progress bar
 												<div class="progress xs">
-													<!-- Change the css width attribute to simulate progress -->
+													Change the css width attribute to simulate progress
 													<div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
 														<span class="sr-only">20% Complete</span>
 													</div>
 												</div>
 										</a>
-										</li>
+										</li> -->
 										<!-- end task item -->
 									</ul>
 								</li>
-								<li class="footer"><a href="#">View all tasks</a></li>
+								<li class="footer"><a href="javascript:void(0)">View all tasks</a></li>
 							</ul>
 						</li>
 						<!-- User Account Menu -->
