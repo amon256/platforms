@@ -14,10 +14,11 @@
 				<input type="hidden" name="_m" value="${activeMenu.id }"/>
 				<input type="hidden" name="_p" value="${cus:pageId('/user/usergragh') }"/>
 				<div class="row">
-					<div class="col-xs-8">
+					<div class="col-xs-6">
 						<input type="text" class="form-control input-sm" value="${root.value.account }" id="account" name="account" placeholder="账号">
 					</div>
 					<div class="col-xs-2"><button type="submit" class="btn btn-primary btn-sm">查询</button></div>
+					<div class="col-xs-2"><a href="${ctx }/${cus:url(activeMenu.id,'/user/toregister')}" role="button" class="btn btn-info btn-sm">注册</a></div>
 				</div>
 			</form>
 		</div>
