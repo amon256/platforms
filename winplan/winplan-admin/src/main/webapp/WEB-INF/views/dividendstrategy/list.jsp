@@ -67,15 +67,9 @@
 						</c:otherwise>
 					</c:choose>
 				</tbody>
-				<tfoot>
-					<tr>
-						<td colspan="9">
-							<jsp:include page="../common/pagination.jsp" flush="true">
-								<jsp:param value="${cus:url(activeMenu.id,'/dividendstrategy/list') }" name="url"/>
-							</jsp:include>
-						</td>
-					</tr>
-				</tfoot>
 			</table>
+			<jsp:include page="../common/pagination.jsp" flush="true">
+				<jsp:param value="${cus:url(activeMenu.id,'/dividendstrategy/list') }" name="url"/>
+			</jsp:include>
 		</div>
 	</div>

@@ -57,15 +57,9 @@
 						</c:otherwise>
 					</c:choose>
 				</tbody>
-				<tfoot>
-					<tr>
-						<td colspan="4">
-							<jsp:include page="../common/pagination.jsp" flush="true">
-								<jsp:param value="${cus:url(activeMenu.id,'/bonuscash/applyList') }" name="url"/>
-							</jsp:include>
-						</td>
-					</tr>
-				</tfoot>
 			</table>
+			<jsp:include page="../common/pagination.jsp" flush="true">
+				<jsp:param value="${cus:url(activeMenu.id,'/bonuscash/applyList') }" name="url"/>
+			</jsp:include>
 		</div>
 	</div>

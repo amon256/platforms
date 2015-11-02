@@ -64,15 +64,9 @@
 						</c:otherwise>
 					</c:choose>
 				</tbody>
-				<tfoot>
-					<tr>
-						<td colspan="8">
-							<jsp:include page="../common/pagination.jsp" flush="true">
-								<jsp:param value="${cus:url(activeMenu.id,'/consume/list') }&account=${queryUser.account }" name="url"/>
-							</jsp:include>
-						</td>
-					</tr>
-				</tfoot>
 			</table>
+			<jsp:include page="../common/pagination.jsp" flush="true">
+				<jsp:param value="${cus:url(activeMenu.id,'/consume/list') }&account=${queryUser.account }" name="url"/>
+			</jsp:include>
 		</div>
 	</div>
