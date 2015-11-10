@@ -1,0 +1,9 @@
+package com.platforms.core.service;
+
+import org.springframework.transaction.annotation.Transactional;
+
+import ${fullBeanName};
+
+@Transactional
+public interface ${beanName}Service extends BaseService<${beanName}>{
+}

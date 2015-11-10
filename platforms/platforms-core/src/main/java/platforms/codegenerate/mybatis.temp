@@ -1,0 +1,84 @@
+<#setting number_format="#">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="${fullBeanName}">
+	<sql id="ddl">
+		CREATE TABLE ${tableName} (
+			f_id varchar(40) not null,
+  <#list fields as field>
+			${field.columnName!'unknown'} ${field.dbType!'unknown'}<#if field.dbType?lower_case == 'varchar'>(${field.length!10})</#if>,
+	</#list>
+		  PRIMARY KEY (f_id)
+		)
+	</sql>
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="GENERATED_KEY" parameterType="${fullBeanName}">
+			INSERT INTO ${tableName} (
+			<#list fields as field>
+				${field.columnName!'unknown'}<#if field_has_next>,</#if>
+			</#list>
+			)
+			values
+			(
+			<#list fields as field>
+				${'#'}${'{'}${field.fieldName}<#if field.joinField == true>.id</#if>,jdbcType=${field.jdbcType}${'}'}<#if field_has_next>,</#if>
+			</#list>
+			)
+	</insert>
+	<update id="update" parameterType="${fullBeanName}">
+		UPDATE ${tableName}
+		SET 
+		<#list fields as field>
+			${field.columnName!'unknown'} = ${'#'}${'{'}${field.fieldName}<#if field.joinField == true>.id</#if>,jdbcType=${field.jdbcType}${'}'}<#if field_has_next>,</#if>
+		</#list>
+		WHERE f_id = ${"#"}${"{"}id${"}"}
+	</update>
+	<delete id="delete" parameterType="int">
+		DELETE FROM ${tableName} WHERE f_id = ${"#"}${"{"}id${"}"}
+	</delete>
+	<sql id="selectSql">
+		SELECT 
+		<#list fields as field>
+			${tableAlias}.${field.columnName!'unknown'} AS "${field.fieldName}<#if field.joinField == true>.id</#if>"<#if field_has_next>,</#if>
+		</#list>
+		<#list joinFields as joinField>
+			<#list joinField.tableFields as field>
+			,${field.columnName!'unknown'} AS "${field.fieldName}<#if field.joinField == true>.id</#if>"
+			</#list>
+		</#list>
+	</sql>
+	<sql id="fromSql">
+		FROM ${tableName} AS ${tableAlias}
+		<#list joinFields as joinField>
+		LEFT JOIN ${joinField.tableName} AS ${joinField.tableAlias}
+		ON ${joinField.tableAlias}.f_id = ${tableAlias}.${joinField.joinColumn}
+		</#list>
+	</sql>
+	<sql id="whereSql">
+		<where>
+			<#list fields as field>
+				<if test="${field.fieldName} != null <#if field.joinField == true>and ${field.fieldName}.id != null</#if> and ${field.fieldName}<#if field.joinField == true>.id</#if> != ''">
+				AND ${tableAlias}.${field.columnName} = ${"#"}${"{"}${field.fieldName}<#if field.joinField == true>.id</#if>${"}"}
+				</if>
+			</#list>
+		</where>
+	</sql>
+	<select id="selectById" parameterType="int" resultType="${fullBeanName}">
+		<include refid="selectSql"/>
+		<include refid="fromSql"/>
+		WHERE ${tableAlias}.f_id = ${"#"}${"{"}id${"}"}
+	</select>
+	<select id="select" parameterType="${fullBeanName}" resultType="${fullBeanName}">
+		<include refid="selectSql"/>
+		<include refid="fromSql"/>
+		<include refid="whereSql"/>
+		<if test="orderByColumns != null and orderByColumns != ''">
+			ORDER BY ${"$"}${"{"}orderByColumns${"}"}
+		</if>
+	</select>
+	<select id="selectCount" parameterType="${fullBeanName}" resultType="int">
+		SELECT 
+		COUNT(1)
+		<include refid="fromSql"/>
+		<include refid="whereSql"/>
+	</select>
+</mapper>

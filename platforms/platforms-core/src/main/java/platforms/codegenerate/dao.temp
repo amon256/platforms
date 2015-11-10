@@ -1,0 +1,6 @@
+package com.platforms.core.dao;
+
+import ${fullBeanName};
+
+public interface ${beanName}Dao extends BaseDao<${beanName}>{
+}

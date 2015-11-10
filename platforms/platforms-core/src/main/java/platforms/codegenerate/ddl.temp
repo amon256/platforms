@@ -1,0 +1,16 @@
+<#setting number_format="#">
+CREATE TABLE  IF NOT EXISTS ${tableName} (
+	f_id varchar(40) not null,
+<#list fields as field>
+<#if field.fieldName != 'id'>
+	${field.columnName!''} ${field.dbType!'unknown'}<#if field.dbType?lower_case == 'varchar'>(${field.length!10})</#if>,
+</#if>
+</#list>
+	PRIMARY KEY (f_id)
+);
+
+<#list fields as field>
+<#if field.fieldName != 'id'>
+CALL ADD_FIELD_IF_NOT_EXISTS('${tableName}','${field.columnName!''}','${field.dbType!'unknown'}<#if field.dbType?lower_case == "varchar">(${field.length!10})</#if>');
+</#if>
+</#list>

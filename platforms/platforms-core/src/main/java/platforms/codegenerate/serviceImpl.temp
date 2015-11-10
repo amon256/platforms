@@ -1,0 +1,20 @@
+package com.platforms.core.service.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import ${fullBeanName};
+import com.platforms.core.dao.BaseDao;
+import com.platforms.core.dao.${beanName}Dao;
+import com.platforms.core.service.${beanName}Service;
+
+@Component
+public class ${beanName}ServiceImpl extends AbstractService<${beanName}> implements ${beanName}Service{
+	@Autowired
+	private ${beanName}Dao dao;
+
+	@Override
+	protected BaseDao<${beanName}> getDao() {
+		return dao;
+	}
+}
